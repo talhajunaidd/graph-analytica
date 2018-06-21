@@ -1,0 +1,17 @@
+<div class="graph-editor-panel" fxLayout="row" fxLayoutWrap="wrap">
+    <!-- Card column -->
+    <div fxFlex.gt-sm="100%" fxFlex="100" [rightClickTrigger]="someMenu">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Editor</mat-card-title>
+            </mat-card-header>
+            <app-ngx-network-x></app-ngx-network-x>
+            <mat-card-content>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<mat-menu #someMenu>
+    <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
+    <button mat-menu-item>Add Edge</button>
+</mat-menu>
