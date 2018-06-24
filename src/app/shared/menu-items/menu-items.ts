@@ -1,11 +1,5 @@
 import {Injectable} from '@angular/core';
-
-export interface Menu {
-    state: string;
-    name: string;
-    type: string;
-    icon: string;
-}
+import {Menu} from './menu';
 
 const MENUITEMS = [
     {state: 'editor', name: 'Editor', type: 'link', icon: 'bubble_chart'},

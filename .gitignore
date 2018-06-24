@@ -43,5 +43,7 @@ testem.log
 Thumbs.db
 
 venv
+venv32
+
 /templates/dist/
 *.pyc

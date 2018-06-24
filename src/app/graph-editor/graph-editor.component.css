@@ -1,5 +1,9 @@
 app-ngx-network-x {
     height: 50rem;
     width: 74rem;
-    border: 3px dashed #26c6da;
+}
+
+mat-card-header {
+    color: rgba(0, 0, 0, .54);
+    background: rgba(0, 0, 0, .03);
 }

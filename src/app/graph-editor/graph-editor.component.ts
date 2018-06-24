@@ -1,28 +1,8 @@
-import {Component, ElementRef, Inject, OnInit} from '@angular/core';
-import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {GraphService} from '../../_services/graph.service';
-
-@Component({
-    selector: 'dialog-overview-example-dialog',
-    templateUrl: 'dialog-overview-example-dialog.html',
-})
-export class DialogOverviewExampleDialogComponent {
-    name: string;
-
-    nodeNameFormControl = new FormControl('', [
-        Validators.required,
-    ]);
-
-    constructor(
-        public dialogRef: MatDialogRef<DialogOverviewExampleDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) {
-    }
-
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
-}
+import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
+import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
 
 
 @Component({
@@ -33,23 +13,49 @@ export class DialogOverviewExampleDialogComponent {
 export class GraphEditorComponent implements OnInit {
     private newNodeName: string;
     private graph: any;
+    private progress: number;
+    private message: string;
 
-    constructor(private element: ElementRef, private dialog: MatDialog, private _graphService: GraphService) {
-        this.graph = this._graphService.getGraph();
+    constructor(private element: ElementRef,
+                private dialog: MatDialog,
+                private _graphService: GraphService,
+                private _httpClient: HttpClient
+    ) {
+
     }
 
     ngOnInit() {
-
-
+        this._graphService.graph.subscribe(res => this.graph = res);
     }
 
     openAddNodeDialog(): void {
-        const dialogRef = this.dialog.open(DialogOverviewExampleDialogComponent, {
+        const dialogRef = this.dialog.open(NodeInputDialogComponent, {
             width: '250px',
         });
 
         dialogRef.afterClosed().subscribe(result => {
             this.graph.addNode(result);
+        });
+    }
+
+    upload(event): void {
+        const files = event.target.files;
+        if (files.length === 0) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', files[0], files[0].name);
+        const uploadReq = new HttpRequest('POST', `api/file/`, formData, {
+            reportProgress: true,
+        });
+
+        this._httpClient.request(uploadReq).subscribe(httpEvent => {
+            if (httpEvent.type === HttpEventType.UploadProgress) {
+                this.progress = Math.round(100 * httpEvent.loaded / httpEvent.total);
+            } else if (httpEvent.type === HttpEventType.Response) {
+                this._graphService.fromDictOfLists(httpEvent.body);
+            }
         });
     }
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import * as jsnx from 'jsnetworkx';
 import * as d3Js from 'd3';
 import IDrawOptions from './models/IDrawOptions';
@@ -14,29 +14,37 @@ export class NgxNetworkXComponent implements OnInit {
     @Input() drawOptions: IDrawOptions = {};
     @Input() optBind = true;
 
+    @Output() addNodes = new EventEmitter();
+    @Output() removeNodes = new EventEmitter();
+    @Output() addEdges = new EventEmitter();
+    @Output() removeEdges = new EventEmitter();
+    @Output() clear = new EventEmitter();
+
     constructor(private _graphService: GraphService) {
-        this.graph = this._graphService.getGraph();
-    }
 
-    addNode() {
-        this.graph.addNode(this.getRandomInt(100));
-    }
-
-    private getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
     }
 
     ngOnInit() {
-        this.graph.addWeightedEdgesFrom([[2, 3, 10]]);
-        this.graph.addStar([3, 4, 5, 6], {weight: 5});
-        this.graph.addStar([2, 1, 0, -1], {weight: 3});
-        this.draw();
-
+        this._graphService.graph.subscribe(res => {
+            this.graph = res;
+            this.draw();
+            jsnx.observe(this.graph);
+            this.graph.on('addNodes', (event: Event) => {
+                    this.draw();
+                }
+            );
+        });
     }
 
     draw(): void {
         const options = Object.assign(this.drawOptions, NgxNetworkXComponent.defaultOptions);
-        jsnx.draw(this.graph, options, this.optBind);
+        const dra = jsnx.draw(this.graph, options, this.optBind);
+        const svg = d3Js.select('app-ngx-network-x');
+        const node = svg.selectAll('.node');
+        const drag = dra.drag().on('dragstart', (event) => {
+            console.log(event.node, ' is selected');
+        });
+        node.call(drag);
     }
 
     static get defaultOptions() {

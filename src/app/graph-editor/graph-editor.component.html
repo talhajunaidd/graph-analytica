@@ -1,17 +1,27 @@
 <div class="graph-editor-panel" fxLayout="row" fxLayoutWrap="wrap">
     <!-- Card column -->
-    <div fxFlex.gt-sm="100%" fxFlex="100" [rightClickTrigger]="someMenu">
+    <div fxFlex.gt-sm="100%" fxFlex="100" [rightClickTrigger]="contextMenu">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Editor</mat-card-title>
+                <div>
+                    <a mat-button [matMenuTriggerFor]="importFormatMenu">Import</a>
+                    <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
+                </div>
             </mat-card-header>
-            <app-ngx-network-x></app-ngx-network-x>
             <mat-card-content>
+                <app-ngx-network-x></app-ngx-network-x>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
-<mat-menu #someMenu>
+<mat-menu #contextMenu>
     <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
     <button mat-menu-item>Add Edge</button>
+</mat-menu>
+
+<mat-menu #importFormatMenu>
+    <button mat-menu-item (click)="fileInput.click()">*.GraphML</button>
+    <button mat-menu-item disabled>*.dot</button>
+    <button mat-menu-item disabled>*.sif</button>
 </mat-menu>

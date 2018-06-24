@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DialogOverviewExampleDialogComponent, GraphEditorComponent} from './graph-editor.component';
 import {RouterModule} from '@angular/router';
 import {GraphEditorRoutes} from './graph-editor.routing';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -18,6 +17,8 @@ import {NgxNetworkXModule} from '../ngx-networkx/ngx-network-x.module';
 import {RightClickTriggerDirective} from '../../_directives/right-click-trigger';
 import {FormsModule} from '@angular/forms';
 import {GraphService} from '../../_services/graph.service';
+import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
+import {GraphEditorComponent} from './graph-editor.component';
 
 @NgModule({
     imports: [
@@ -29,8 +30,8 @@ import {GraphService} from '../../_services/graph.service';
         MatDialogModule, MatSnackBarModule, MatButtonModule
     ],
     providers: [GraphService],
-    entryComponents: [DialogOverviewExampleDialogComponent],
-    declarations: [GraphEditorComponent, RightClickTriggerDirective, DialogOverviewExampleDialogComponent]
+    entryComponents: [NodeInputDialogComponent],
+    declarations: [GraphEditorComponent, RightClickTriggerDirective, NodeInputDialogComponent]
 })
 export class GraphEditorModule {
 }
