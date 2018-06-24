@@ -8,7 +8,7 @@ export interface Menu {
 }
 
 const MENUITEMS = [
-    {state: 'editor', name: 'Graph Editor', type: 'link', icon: 'bubble_chart' },
+    {state: 'editor', name: 'Editor', type: 'link', icon: 'bubble_chart'},
     /*{state: 'starter', name: 'Starter Page', type: 'link', icon: 'av_timer'},
     {state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5'},
     {state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy'},
