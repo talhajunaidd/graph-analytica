@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api'
+    'graphanalytica.api'
 ]
 
 MIDDLEWARE = [
@@ -36,7 +36,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'GraphAnalytica.urls'
+ROOT_URLCONF = 'graphanalytica.urls'
 
 TEMPLATES = [
     {
@@ -55,7 +55,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'GraphAnalytica.wsgi.application'
+WSGI_APPLICATION = 'graphanalytica.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
