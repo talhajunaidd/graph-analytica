@@ -1,43 +1,58 @@
-import {Injectable, OnInit} from '@angular/core';
-import * as jsnx from 'jsnetworkx';
-import {BehaviorSubject} from 'rxjs';
+import {Injectable} from '@angular/core';
+import IEdgeInput from '../app/graph-editor/utils/IEdgeInput';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GraphService implements OnInit {
-    private graphs = new BehaviorSubject<any>({});
-    graph = this.graphs.asObservable();
+export class GraphService {
+    private cy: any;
+    elements = [ // list of graph elements to start with
+        { // node a
+            data: {id: 'a'}
+        },
+        { // node b
+            data: {id: 'b'}
+        }/*,
+            { // edge ab
+                data: {id: 'ab', source: 'a', target: 'b'}
+            }*/
+    ];
 
     constructor() {
-        const data = {
-            'n0': [
-                'n1'
-            ],
-            'n1': [
-                'n0',
-            ]
-        };
-        this.fromDictOfLists(data);
-
     }
 
-    /*getGraph(): jsnx.classes.Graph {
-        return this.graph;
-    }*/
-
-    fromDictOfLists(graphAsDictOfList: any) {
-        const graph = jsnx.fromDictOfLists(graphAsDictOfList);
-        this.graphs.next(graph);
+    registerCy(cy: any) {
+        this.cy = cy;
+        this.cy.add(this.elements);
     }
 
-    ngOnInit(): void {
-
-    }
-
-    onAddNode(var1, var2, var3, var4) {
-        console.log('changed');
+    addNode(nodeId: string) {
+        this.cy.add({group: 'nodes', data: {id: nodeId}});
     }
 
 
+    getNodes() {
+        const nodes = [];
+        this.cy.nodes().forEach(z => {
+            nodes.push(z.id());
+        });
+        return nodes;
+    }
+
+    addEdge(result: IEdgeInput) {
+        let weight = result.threshold;
+        if (!result.isActivator) {
+            weight = -weight;
+        }
+        this.cy.add(
+            {
+                group: 'edges',
+                data: {
+                    id: result.source + result.target,
+                    source: result.source,
+                    target: result.target,
+                    weight: weight
+                }
+            });
+    }
 }

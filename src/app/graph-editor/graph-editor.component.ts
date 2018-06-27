@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {GraphService} from '../../_services/graph.service';
 import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
 import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
+import {EdgeInputDialogComponent} from './edge-input-dialog/edge-input-dialog.component';
 
 
 @Component({
@@ -12,9 +13,9 @@ import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
 })
 export class GraphEditorComponent implements OnInit {
     private newNodeName: string;
-    private graph: any;
     private progress: number;
     private message: string;
+
 
     constructor(private element: ElementRef,
                 private dialog: MatDialog,
@@ -24,8 +25,9 @@ export class GraphEditorComponent implements OnInit {
 
     }
 
+
     ngOnInit() {
-        this._graphService.graph.subscribe(res => this.graph = res);
+        // this._graphService.graph.subscribe(res => this.graph = res);
     }
 
     openAddNodeDialog(): void {
@@ -34,7 +36,18 @@ export class GraphEditorComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this.graph.addNode(result);
+            this._graphService.addNode(result.name);
+        });
+    }
+
+    openAddEdgeDialog(): void {
+        const dialogRef = this.dialog.open(EdgeInputDialogComponent, {
+            data: {nodes: this._graphService.getNodes()}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+
+            this._graphService.addEdge(result);
         });
     }
 
@@ -54,20 +67,10 @@ export class GraphEditorComponent implements OnInit {
             if (httpEvent.type === HttpEventType.UploadProgress) {
                 this.progress = Math.round(100 * httpEvent.loaded / httpEvent.total);
             } else if (httpEvent.type === HttpEventType.Response) {
-                this._graphService.fromDictOfLists(httpEvent.body);
+                // this._graphService.fromDictOfLists(httpEvent.body);
             }
         });
     }
-
-
-    /*get width(): number {
-        const parent = this.element.nativeElement.parentNode;
-        const percents = parseInt(parent.style.width, 10);
-        const parentWidth = parseInt(parent.style.width, 10);
-        const pixels = parentWidth * (percents / 100);
-        return pixels;
-    }*/
-
 }
 
 

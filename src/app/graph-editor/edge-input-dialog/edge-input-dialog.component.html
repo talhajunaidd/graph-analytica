@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>Add Edge</h2>
+<mat-dialog-content>
+    <form [formGroup]="edgeInputForm">
+        <div class="input-group" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3%">
+            <mat-form-field fxFlexOrder="1">
+                <input matInput placeholder="Source Node" aria-label="Source Node" [matAutocomplete]="auto"
+                       formControlName="source">
+                <mat-error *ngIf="edgeInputForm.controls['source'].hasError('nodeDoesNodeExist')">
+                    Entered node does not exist
+                </mat-error>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let node of data.nodes" [value]="node">
+                        <span>{{ node }}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field fxFlexOrder="2">
+                <input matInput placeholder="Target Node" aria-label="Target Node" [matAutocomplete]="auto"
+                       formControlName="target">
+                <mat-error *ngIf="edgeInputForm.controls['target'].hasError('nodeDoesNodeExist')">
+                    Entered node does not exist
+                </mat-error>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let node of data.nodes" value="{{node}}">
+                        <span>{{ node }}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="input-group" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3%">
+            <mat-form-field fxFlexOrder="1" fxFlex="50%">
+                <input formControlName="threshold" type="number" matInput placeholder="Threshold">
+            </mat-form-field>
+            <mat-button-toggle-group formControlName="isActivator" id="type" #group="matButtonToggleGroup"
+                                     fxFlexOrder="2" fxFlex="50%">
+                <mat-button-toggle [value]="true">
+                    <span class="button-text">Activator</span>
+                </mat-button-toggle>
+                <mat-button-toggle [value]="false">
+                    <span class="button-text">Inhibitor</span>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-button (click)="submit()" [disabled]="edgeInputForm.invalid">Proceed</button>
+</mat-dialog-actions>

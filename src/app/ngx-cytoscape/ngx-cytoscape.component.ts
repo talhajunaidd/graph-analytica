@@ -1,12 +1,15 @@
-import {Component, ElementRef, Input, OnChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import * as cytoscape from 'cytoscape';
+import {GraphService} from '../../_services/graph.service';
 
 @Component({
     selector: 'app-ngx-cytoscape',
     templateUrl: './ngx-cytoscape.component.html',
-    styleUrls: ['./ngx-cytoscape.component.css']
+    styleUrls: ['./ngx-cytoscape.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxCytoscapeComponent implements OnChanges {
+export class NgxCytoscapeComponent implements OnInit {
 
     private _elements: any;
     private _style: any;
@@ -14,11 +17,12 @@ export class NgxCytoscapeComponent implements OnChanges {
     private _zoom: any;
     private _cy: any;
 
-    public constructor(private _el: ElementRef) {
+    public constructor(private _el: ElementRef, private _graphService: GraphService) {
 
         this._layout = this._layout || {
-            name: 'grid',
-            directed: true,
+            name: 'breadthfirst',
+            directed: false,
+            avoidOverlap: true,
             padding: 0
         };
 
@@ -30,12 +34,8 @@ export class NgxCytoscapeComponent implements OnChanges {
         this._style = this._style || cytoscape.stylesheet()
             .selector('node')
             .css({
-                'content': 'data(name)',
-                'shape': 'circle',
-                'text-valign': 'center',
-                'background-color': 'data(faveColor)',
-                'width': '100px',
-                'height': '100px'
+                'background-color': '#666',
+                'label': 'data(id)'
             })
             .selector(':selected')
             .css({
@@ -44,28 +44,27 @@ export class NgxCytoscapeComponent implements OnChanges {
             })
             .selector('edge')
             .css({
-                'label': 'data(label)',
-                'color': 'black',
+                'width': 3,
                 'curve-style': 'bezier',
-                'opacity': 0.666,
-                'width': 'mapData(strength, 70, 100, 2, 6)',
-                'target-arrow-shape': 'triangle',
-                'line-color': 'data(faveColor)',
-                'source-arrow-color': 'data(faveColor)',
-                'target-arrow-color': 'data(faveColor)'
+                'text-margin-y': -10,
+                'label': 'data(weight)',
+                'line-color': '#ccc',
+                'target-arrow-color': '#ccc',
+                'target-arrow-shape': 'triangle'
             });
     }
 
-    public ngOnChanges(): any {
+    /*public ngOnChanges(): any {
         this.render();
-    }
+    }*/
 
-    addNode() {
-        this.cy.remove('node[name="Jerry"]');
+    public ngOnInit(): void {
+        this.render();
     }
 
     public render() {
         if (!this.cy) {
+
             this.cy = cytoscape({
                 container: this.el.nativeElement,
                 layout: this.layout,
@@ -74,7 +73,9 @@ export class NgxCytoscapeComponent implements OnChanges {
                 style: this.style,
                 elements: this.elements,
             });
+            this._graphService.registerCy(this._cy);
             this.cy.delayAnimation(1000);
+
         } else {
             this.cy.layout = this.layout;
             this.cy.nodes().remove();

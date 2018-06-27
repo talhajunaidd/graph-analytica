@@ -1,9 +1,6 @@
-/*
-#cy {
-    height: 100%;
+app-ngx-cytoscape {
+    height: 27rem;
     width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
+    float: left;
+    border: solid #26c6da;
 }
-*/

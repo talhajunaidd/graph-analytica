@@ -10,14 +10,14 @@
                 </div>
             </mat-card-header>
             <mat-card-content>
-                <app-ngx-network-x></app-ngx-network-x>
+                <app-ngx-cytoscape [elements]="elements"></app-ngx-cytoscape>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
 <mat-menu #contextMenu>
     <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
-    <button mat-menu-item>Add Edge</button>
+    <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
 </mat-menu>
 
 <mat-menu #importFormatMenu>

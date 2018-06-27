@@ -1,13 +1,14 @@
-<h2 mat-dialog-title>Enter Node label</h2>
+<h2 mat-dialog-title>Add Node</h2>
 <mat-dialog-content>
-    <mat-form-field>
-        <label>
-            <input matInput [(ngModel)]="name">
-        </label>
-    </mat-form-field>
+    <form [formGroup]="nodeInputFrom">
+        <mat-form-field>
+            <input matInput placeholder="Enter Node label" aria-label="Node name"
+                   formControlName="name">
+        </mat-form-field>
+    </form>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-button [mat-dialog-close]="name">Proceed</button>
+    <button mat-button [mat-dialog-close]="nodeInputFrom.value" [disabled]="nodeInputFrom.invalid">Proceed</button>
 </mat-dialog-actions>

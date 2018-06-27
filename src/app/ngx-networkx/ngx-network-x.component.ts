@@ -25,7 +25,7 @@ export class NgxNetworkXComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._graphService.graph.subscribe(res => {
+        /*this._graphService.graph.subscribe(res => {
             this.graph = res;
             this.draw();
             jsnx.observe(this.graph);
@@ -33,7 +33,9 @@ export class NgxNetworkXComponent implements OnInit {
                     this.draw();
                 }
             );
-        });
+        });*/
+
+
     }
 
     draw(): void {
@@ -41,7 +43,7 @@ export class NgxNetworkXComponent implements OnInit {
         const dra = jsnx.draw(this.graph, options, this.optBind);
         const svg = d3Js.select('app-ngx-network-x');
         const node = svg.selectAll('.node');
-        const drag = dra.drag().on('dragstart', (event) => {
+        const drag = dra.drag().on('dragend', (event) => {
             console.log(event.node, ' is selected');
         });
         node.call(drag);
@@ -50,7 +52,6 @@ export class NgxNetworkXComponent implements OnInit {
     static get defaultOptions() {
         return {
             element: 'app-ngx-network-x',
-            weighted: true,
             edgeStyle: {
                 'stroke-width': 10
             },
@@ -60,11 +61,13 @@ export class NgxNetworkXComponent implements OnInit {
             nodeAttr: {
                 r: 15
             },
+            weighted: true,
+
             withLabels: true,
+            withEdgeLabels: true,
             stickyDrag: true,
             labelStyle: {fill: 'white'},
             d3: d3Js,
-
         };
     }
 

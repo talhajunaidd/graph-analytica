@@ -6,7 +6,11 @@ import {MenuItems} from '../../shared/menu-items/menu-items';
 @Component({
     selector: 'app-full-layout',
     templateUrl: 'full.component.html',
-    styleUrls: [],
+    styles: [`
+        .logo {
+            color: white;
+        }
+    `],
 })
 export class FullComponent implements OnDestroy, AfterViewInit {
     mobileQuery: MediaQueryList;

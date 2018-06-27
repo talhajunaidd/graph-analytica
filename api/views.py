@@ -27,6 +27,7 @@ class FileView(APIView):
     def post(self, request, *args, **kwargs):
         file = request.data['file'].file
         graph = nx.read_graphml(file)
-        graph_as_List = nx.to_dict_of_lists(graph)
-        return Response(graph_as_List)
+
+        # graph_as_List = nx.to_dict_of_lists(graph)
+        return Response()
         # graph = nx.drawing.nx_agraph.read_dot(file)
