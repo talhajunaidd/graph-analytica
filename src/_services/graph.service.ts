@@ -8,14 +8,19 @@ export class GraphService {
     private cy: any;
     elements = [ // list of graph elements to start with
         { // node a
-            data: {id: 'a'}
+            data: {id: 'a'},
+            position: { // the model position of the node (optional on init, mandatory after)
+                x: 100,
+                y: 200
+            },
         },
         { // node b
-            data: {id: 'b'}
-        }/*,
-            { // edge ab
-                data: {id: 'ab', source: 'a', target: 'b'}
-            }*/
+            data: {id: 'b'},
+            position: { // the model position of the node (optional on init, mandatory after)
+                x: 200,
+                y: 100
+            },
+        }
     ];
 
     constructor() {
@@ -27,9 +32,21 @@ export class GraphService {
     }
 
     addNode(nodeId: string) {
-        this.cy.add({group: 'nodes', data: {id: nodeId}});
+        this.cy.add({
+            group: 'nodes',
+            data: {
+                id: nodeId
+            },
+            position: { // the model position of the node (optional on init, mandatory after)
+                x: this.getRandomNumber(),
+                y: this.getRandomNumber()
+            },
+        });
     }
 
+    getRandomNumber(): number {
+        return Math.floor((Math.random() * 300) + 1);
+    }
 
     getNodes() {
         const nodes = [];

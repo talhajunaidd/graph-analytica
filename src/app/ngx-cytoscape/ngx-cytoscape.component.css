@@ -1,6 +1,6 @@
 app-ngx-cytoscape {
-    height: 27rem;
+    height: 100%;
     width: 100%;
-    float: left;
+    display: block;
     border: solid #26c6da;
 }

@@ -25,6 +25,7 @@ export class RightClickTriggerDirective extends MatMenuTrigger {
 
     handleContext(e) {
         e.preventDefault(); // prevents the browsers context menu
+        // document.getElementById('contextMenu').setAttribute('style', `position: absolute; top:${e.pageY}px; left: ${e.pageX}px`);
         super._handleClick(e);
     }
 }

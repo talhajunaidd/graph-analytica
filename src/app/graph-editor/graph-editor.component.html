@@ -3,19 +3,21 @@
     <div fxFlex.gt-sm="100%" fxFlex="100" [rightClickTrigger]="contextMenu">
         <mat-card>
             <mat-card-header>
-                <mat-card-title>Editor</mat-card-title>
-                <div>
-                    <a mat-button [matMenuTriggerFor]="importFormatMenu">Import</a>
-                    <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
+                <div fxFlex="row" fxLayoutAlign="space-between center">
+                    <mat-card-title fxFlexOrder="1">Editor</mat-card-title>
+                    <div fxFlexOrder="2">
+                        <a mat-button [matMenuTriggerFor]="importFormatMenu">Import</a>
+                        <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
+                    </div>
                 </div>
             </mat-card-header>
             <mat-card-content>
-                <app-ngx-cytoscape [elements]="elements"></app-ngx-cytoscape>
+                <app-ngx-cytoscape></app-ngx-cytoscape>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
-<mat-menu #contextMenu>
+<mat-menu #contextMenu id="contextMenu">
     <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
     <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
 </mat-menu>

@@ -20,10 +20,12 @@ export class NgxCytoscapeComponent implements OnInit {
     public constructor(private _el: ElementRef, private _graphService: GraphService) {
 
         this._layout = this._layout || {
-            name: 'breadthfirst',
-            directed: false,
+            name: 'grid',
+            directed: true,
+            animate: true,
+            animationDuration: 500,
             avoidOverlap: true,
-            padding: 0
+            padding: 30
         };
 
         this._zoom = this._zoom || {
@@ -35,7 +37,7 @@ export class NgxCytoscapeComponent implements OnInit {
             .selector('node')
             .css({
                 'background-color': '#666',
-                'label': 'data(id)'
+                'label': 'data(id)',
             })
             .selector(':selected')
             .css({

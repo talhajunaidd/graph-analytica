@@ -36,7 +36,9 @@ export class GraphEditorComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this._graphService.addNode(result.name);
+            if (result) {
+                this._graphService.addNode(result.name);
+            }
         });
     }
 
@@ -46,8 +48,9 @@ export class GraphEditorComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-
-            this._graphService.addEdge(result);
+            if (result) {
+                this._graphService.addEdge(result);
+            }
         });
     }
 
