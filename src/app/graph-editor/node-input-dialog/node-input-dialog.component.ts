@@ -7,8 +7,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
     templateUrl: './node-input-dialog.component.html',
 })
 export class NodeInputDialogComponent {
+
     nodeInputFrom = new FormGroup({
-        name: new FormControl('', [Validators.required,])
+        id: new FormControl('', [Validators.required]),
+        min: new FormControl(0, Validators.required),
+        max: new FormControl(null, Validators.required)
     });
 
     constructor(

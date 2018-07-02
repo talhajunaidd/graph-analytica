@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import {GraphService} from '../../_services/graph.service';
 
@@ -66,7 +66,6 @@ export class NgxCytoscapeComponent implements OnInit {
 
     public render() {
         if (!this.cy) {
-
             this.cy = cytoscape({
                 container: this.el.nativeElement,
                 layout: this.layout,

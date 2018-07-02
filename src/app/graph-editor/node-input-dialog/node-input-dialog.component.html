@@ -2,13 +2,20 @@
 <mat-dialog-content>
     <form [formGroup]="nodeInputFrom">
         <mat-form-field>
-            <input matInput placeholder="Enter Node label" aria-label="Node name"
-                   formControlName="name">
+            <input matInput placeholder="Enter Node label" aria-label="Node Label"
+                   formControlName="id">
         </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3%">
+            <mat-form-field fxFlexOrder="1" fxFlex="50%">
+                <input value="0" type="number" matInput [disabled]="true" placeholder="Min">
+            </mat-form-field>
+            <mat-form-field fxFlexOrder="1" fxFlex="50%">
+                <input formControlName="max" type="number" matInput placeholder="max">
+            </mat-form-field>
+        </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
-    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button mat-button [mat-dialog-close]="nodeInputFrom.value" [disabled]="nodeInputFrom.invalid">Proceed</button>
 </mat-dialog-actions>

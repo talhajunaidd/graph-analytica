@@ -8,6 +8,7 @@
                     <div fxFlexOrder="2">
                         <a mat-button [matMenuTriggerFor]="importFormatMenu">Import</a>
                         <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
+                        <button mat-button (click)="export()">Export</button>
                     </div>
                 </div>
             </mat-card-header>

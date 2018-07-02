@@ -27,7 +27,8 @@ import {NgxCytoscapeModule} from '../ngx-cytoscape/ngx-cytoscape.module';
     imports: [
         CommonModule, RouterModule.forChild(GraphEditorRoutes), FlexLayoutModule, MatCardModule, MatTabsModule, NgxNetworkXModule,
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
-        ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule
+        ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule,
+        MatSnackBarModule
     ],
     providers: [GraphService],
     entryComponents: [NodeInputDialogComponent, EdgeInputDialogComponent],

@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {GraphService} from '../../_services/graph.service';
 import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
 import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
@@ -20,25 +20,37 @@ export class GraphEditorComponent implements OnInit {
     constructor(private element: ElementRef,
                 private dialog: MatDialog,
                 private _graphService: GraphService,
-                private _httpClient: HttpClient
+                private _httpClient: HttpClient, private _snackBar: MatSnackBar
     ) {
 
     }
 
 
     ngOnInit() {
-        // this._graphService.graph.subscribe(res => this.graph = res);
     }
 
     openAddNodeDialog(): void {
-        const dialogRef = this.dialog.open(NodeInputDialogComponent, {
-            width: '250px',
-        });
+        const dialogRef = this.dialog.open(NodeInputDialogComponent, {});
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this._graphService.addNode(result.name);
+                this._graphService.addNode(result);
             }
+        });
+    }
+
+    export(): void {
+        this._httpClient.get('api/file/', {responseType: 'blob'}).subscribe((res) => {
+            console.log('start download:', res);
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            document.body.appendChild(a);
+            a.setAttribute('style', 'display: none');
+            a.href = url;
+            a.download = 'network.graphml';
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
         });
     }
 
@@ -70,10 +82,8 @@ export class GraphEditorComponent implements OnInit {
             if (httpEvent.type === HttpEventType.UploadProgress) {
                 this.progress = Math.round(100 * httpEvent.loaded / httpEvent.total);
             } else if (httpEvent.type === HttpEventType.Response) {
-                // this._graphService.fromDictOfLists(httpEvent.body);
+                this._graphService.importAdjacency(httpEvent.body);
             }
         });
     }
 }
-
-

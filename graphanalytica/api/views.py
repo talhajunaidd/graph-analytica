@@ -1,6 +1,7 @@
 # Create your views here.
+from wsgiref.util import FileWrapper
 
-import networkx as nx
+from django.http import HttpResponse
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,13 +13,21 @@ from graphanalytica.api.serializers import NodeSerializer, EdgeSerializer
 class FileView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+        self.network = NetworkService()
+
     def post(self, request, *args, **kwargs):
         file = request.data['file'].file
-        graph = nx.read_graphml(file)
+        data = self.network.import_graphml(file)
+        return Response(data)
 
-        # graph_as_List = nx.to_dict_of_lists(graph)
-        return Response()
-        # graph = nx.drawing.nx_agraph.read_dot(file)
+    def get(self, request):
+        file_name = self.network.export_graphml()
+        f = open(file_name)
+        response = HttpResponse(FileWrapper(f), content_type='application/graphml')
+        response['Content-Disposition'] = 'attachment; filename="%s"' % 'network.graphml'
+        return response
 
 
 class NodeView(APIView):
@@ -28,8 +37,7 @@ class NodeView(APIView):
 
     def get(self, request):
         nodes = self.network.get_nodes()
-        serializer = NodeSerializer(nodes, many=True)
-        return Response(serializer.data)
+        return Response(nodes)
 
     def post(self, request):
         serializer = NodeSerializer()
