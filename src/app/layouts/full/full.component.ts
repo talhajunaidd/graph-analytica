@@ -1,5 +1,5 @@
 import {MediaMatcher} from '@angular/cdk/layout';
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {MenuItems} from '../../shared/menu-items/menu-items';
 
 /** @title Responsive sidenav */
@@ -12,9 +12,8 @@ import {MenuItems} from '../../shared/menu-items/menu-items';
         }
     `],
 })
-export class FullComponent implements OnDestroy, AfterViewInit {
+export class FullComponent implements OnDestroy {
     mobileQuery: MediaQueryList;
-
     private _mobileQueryListener: () => void;
 
     constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public menuItems: MenuItems) {
@@ -25,10 +24,6 @@ export class FullComponent implements OnDestroy, AfterViewInit {
 
     ngOnDestroy(): void {
         this.mobileQuery.removeListener(this._mobileQueryListener);
-    }
-
-    ngAfterViewInit() {
-
     }
 
 }
