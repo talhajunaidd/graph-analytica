@@ -2,6 +2,7 @@ import networkx as nx
 from networkx.readwrite import json_graph
 
 from core.constants import pickle_key, graphml_file_name
+from core.utils import all_subsets
 
 
 class NetworkService:
@@ -23,6 +24,10 @@ class NetworkService:
     def get_nodes(self):
         return list(self.network.nodes)
 
+    def clear(self):
+        self.network.clear()
+        self.persist_network()
+
     def get_edges(self):
         return list(self.network.edges)
 
@@ -39,3 +44,11 @@ class NetworkService:
 
     def persist_network(self):
         nx.write_gpickle(self.network, pickle_key)
+
+    def generate_predecessor_combinations(self):
+        result = dict()
+        for node in self.network.nodes:
+            predecessors = tuple(nx.DiGraph.predecessors(self.network, node))
+            combinations = all_subsets(predecessors)
+            result[node] = tuple(combinations)
+        return result
