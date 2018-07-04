@@ -1,3 +1,5 @@
+import itertools
+
 import networkx as nx
 from networkx.readwrite import json_graph
 
@@ -52,3 +54,12 @@ class NetworkService:
             combinations = all_subsets(predecessors)
             result[node] = tuple(combinations)
         return result
+
+    def generate_range_combinations(self):
+        nodes = self.network.nodes
+        parameters = list()
+        for node in nodes:
+            min = self.network.nodes[node]['min']
+            max = self.network.nodes[node]['max']
+            parameters.append(tuple(range(min, max + 1)))
+        return tuple(itertools.product(*parameters))

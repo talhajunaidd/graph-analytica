@@ -7,8 +7,8 @@ from core.network import NetworkService
 class NetworkTestCase(TestCase):
     def setUp(self):
         self.network = NetworkService()
-        x = Node('x', 1, 2)
-        y = Node('y', 1, 3)
+        x = Node('x', 0, 2)
+        y = Node('y', 0, 1)
         edge1 = Edge(x.id, y.id, 1)
         edge2 = Edge(y.id, x.id, -1)
         edge3 = Edge(x.id, x.id, 2)
@@ -23,6 +23,11 @@ class NetworkTestCase(TestCase):
         expected_x = ((), ('y',), ('x',), ('y', 'x'))
         print(predecessor_combinations)
         self.assertTupleEqual(predecessor_combinations['x'], expected_x)
+
+    def test_range_combinations(self):
+        result = self.network.generate_range_combinations()
+        expected = ((0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1))
+        self.assertTupleEqual(result, expected)
 
     def tearDown(self):
         self.network.clear()
