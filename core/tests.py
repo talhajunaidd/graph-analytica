@@ -31,5 +31,11 @@ class NetworkTestCase(TestCase):
         expected = ((0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1))
         self.assertTupleEqual(result, expected)
 
+    def test_state_graph(self):
+        graph = self.network_analyser.generate_state_graph()
+        result = list(graph.nodes)
+        expected = ['00', '01', '10', '11', '20', '21']
+        self.assertListEqual(result, expected)
+
     def tearDown(self):
         self.network_service.clear()

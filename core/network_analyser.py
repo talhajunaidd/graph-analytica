@@ -25,3 +25,11 @@ class NetworkAnalyser:
             max = self.network.nodes[node]['max']
             parameters.append(tuple(range(min, max + 1)))
         return tuple(itertools.product(*parameters))
+
+    def generate_state_graph(self):
+        combinations = self.generate_range_combinations()
+        state_graph = nx.DiGraph()
+        for combination in combinations:
+            node = ''.join(map(str, combination))
+            state_graph.add_node(node)
+        return state_graph
