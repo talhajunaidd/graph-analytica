@@ -47,3 +47,5 @@ venv32
 
 /templates/dist/
 *.pyc
+*.gpickle
+*.http
