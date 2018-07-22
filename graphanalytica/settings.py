@@ -12,7 +12,7 @@ SECRET_KEY = '@d+wc!%1koug*f!oj)alo0nk1j#ze&41d(i5l!!jq2i_3a135e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['22yhkgiwzd.execute-api.us-east-1.amazonaws.com']
 
 # Application definition
 
@@ -100,5 +100,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'dist')
+#
+STATICFILES_DIRS = [
+    os.path.join(ANGULAR_APP_DIR),
+]
 # Extra places for collectstatic to find static files.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+

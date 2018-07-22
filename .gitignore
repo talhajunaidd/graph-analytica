@@ -19,10 +19,6 @@
 
 # IDE - VSCode
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # misc
 /.sass-cache
@@ -49,3 +45,4 @@ venv32
 *.pyc
 *.gpickle
 *.http
+static

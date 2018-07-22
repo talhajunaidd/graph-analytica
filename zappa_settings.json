@@ -1,0 +1,24 @@
+{
+    "dev": {
+        "django_settings": "graphanalytica.settings",
+        /*"profile_name": null,*/
+        "project_name": "graphanalytica",
+        "runtime": "python3.6",
+        "s3_bucket": "graph-analytica",
+        "aws_region": "us-east-1",
+        /*"manage_roles": false,
+        "role_name": "zappa",*/
+        "exclude": ["src/", "dist/", "venv", ".idea", ".git", "e2e", "node_modules", "*.pyc"]
+    },
+    "production": {
+        "django_settings": "graphanalytica.settings",
+        /*"profile_name": null,*/
+        "project_name": "graphanalytica",
+        "runtime": "python3.6",
+        "s3_bucket": "graph-analytica",
+        "aws_region": "us-east-1",
+        /*"manage_roles": false,
+        "role_name": "zappa",*/
+        "exclude": ["src/", "dist/", "venv", ".idea", ".git", "e2e", "node_modules", "*.pyc"]
+    }
+}
