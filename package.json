@@ -7,11 +7,13 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-prod": "ng build --produciton"
   },
   "private": true,
   "dependencies": {
     "@angular-devkit/core": "0.6.3",
+    "@angular-devkit/build-angular": "0.6.8",
     "@angular/animations": "6.0.9",
     "@angular/cdk": "^6.4.0",
     "@angular/common": "6.0.9",
