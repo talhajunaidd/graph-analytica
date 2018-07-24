@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod": "ng build --produciton"
+    "build-prod": "node --max-old-space-size=8192 & ng build --prod --aot"
   },
   "private": true,
   "dependencies": {

@@ -22,12 +22,18 @@ stages:
     - build
     - deploy
 
-job restore-packages:
+job restore-pip-packages:
     tags:
         - graph-analytica
     stage: restore-packages
     script:
         - pip3 install -r requirements.txt
+
+job restore-npm-packages:
+    tags:
+        - graph-analytica
+    stage: restore-packages
+    script:
         - npm install
 
 job build:
@@ -35,5 +41,5 @@ job build:
         - graph-analytica
     stage: build
     script:
-        - ng build --prod
+        - npm run build-prod
         - python3 manage.py collectstatic
