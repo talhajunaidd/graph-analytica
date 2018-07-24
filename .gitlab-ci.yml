@@ -15,17 +15,25 @@ before_script:
     #- apt-get update -q && apt-get install nodejs -yqq
 
 stages:
-    - restore-packages
+    - restore-pip-packages
+    - restore-npm-packages
     - build
     - deploy
 
-job restore-packages:
+job restore-pip-packages:
     tags:
         - graph-analytica
-    stage: restore-packages
+    stage: restore-pip-packages
     script:
         - pip3 install -r requirements.txt
+
+job restore-npm-packages:
+    tags:
+        - graph-analytica
+    stage: restore-npm-packages
+    script:
         - npm install
+
 
 job build:
     tags:
