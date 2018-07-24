@@ -4,15 +4,15 @@ variables:
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
-  paths:
-  - ~/.cache/pip/
+    paths:
+        - ~/.cache/pip/
 
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
 before_script:
   # Print out python version for debugging
-  - python3 -V
-  - apt-get update -q && apt-get install nodejs -yqq
+    - python3 -V
+    - apt-get update -q && apt-get install nodejs -yqq
 
 stages:
     - restore-packages
@@ -20,7 +20,9 @@ stages:
     - deploy
 
 job 1:
-  stage: restore-packages
-  script:
-    - pip3 install -r requirements.txt
-    - npm install
+    tags:
+        - graph-analytica
+    stage: restore-packages
+    script:
+        - pip3 install -r requirements.txt
+        - npm install
