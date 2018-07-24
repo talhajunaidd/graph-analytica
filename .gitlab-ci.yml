@@ -9,10 +9,13 @@ cache:
 
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
+tags:
+    - graph-analytica
+
 before_script:
   # Print out python version for debugging
     - python3 -V
-    - apt-get update -q && apt-get install nodejs -yqq
+    #- apt-get update -q && apt-get install nodejs -yqq
 
 stages:
     - restore-packages
@@ -20,9 +23,13 @@ stages:
     - deploy
 
 job restore-packages:
-    tags:
-        - graph-analytica
     stage: restore-packages
     script:
         - pip3 install -r requirements.txt
         - npm install
+
+job build:
+    stage: build
+        script:
+            - ng build --prod
+            - python3 manage.py collectstatic
