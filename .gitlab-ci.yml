@@ -43,4 +43,4 @@ job build:
     script:
         - rm -r static
         - npm run build-prod
-        - python3 manage.py collectstatic ---noinput
+        - python3 manage.py collectstatic
