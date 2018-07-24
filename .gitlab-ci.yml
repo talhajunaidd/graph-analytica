@@ -19,7 +19,7 @@ stages:
     - build
     - deploy
 
-job 1:
+job restore-packages:
     tags:
         - graph-analytica
     stage: restore-packages
