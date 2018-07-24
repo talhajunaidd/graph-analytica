@@ -41,5 +41,6 @@ job build:
         - graph-analytica
     stage: build
     script:
+        - rm -r static
         - npm run build-prod
-        - python3 manage.py collectstatic
+        - python3 manage.py collectstatic ---noinput
