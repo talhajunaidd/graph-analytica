@@ -31,6 +31,6 @@ job build:
     tags:
         - graph-analytica
     stage: build
-        script:
-            - ng build --prod
-            - python3 manage.py collectstatic
+    script:
+        - ng build --prod
+        - python3 manage.py collectstatic
