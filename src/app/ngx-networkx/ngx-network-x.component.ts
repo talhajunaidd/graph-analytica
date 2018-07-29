@@ -70,5 +70,4 @@ export class NgxNetworkXComponent implements OnInit {
             d3: d3Js,
         };
     }
-
 }
