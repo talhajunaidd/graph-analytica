@@ -12,7 +12,7 @@ SECRET_KEY = '@d+wc!%1koug*f!oj)alo0nk1j#ze&41d(i5l!!jq2i_3a135e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['18.211.70.234']
+ALLOWED_HOSTS = ['18.211.70.234', 'graphanalytica.tk', 'www.graphanalytica.tk']
 
 # Application definition
 
