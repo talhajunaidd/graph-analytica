@@ -36,6 +36,9 @@ deploy:
     stage: deploy
     dependencies:
     - build
+    artifacts:
+        paths:
+        - dist graphanalytica core
     script:
     # - python3 manage.py collectstatic --noinput
-    - cp -r dist /var/www/graphanalytica/
+    - sudo cp -r dist /var/www/graphanalytica/
