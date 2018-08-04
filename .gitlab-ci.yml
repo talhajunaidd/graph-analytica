@@ -3,11 +3,7 @@ variables:
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-    untracked: true
-    key: "$CI_BUILD_REF_NAME"
-    paths:
-    - dist/
+
 
 
 # This is a basic example for a gem or script which doesn't use
@@ -18,28 +14,33 @@ before_script:
 #- apt-get update -q && apt-get install nodejs -yqq
 
 stages:
-- restore-packages
-- build
+- process-frontend
+- process-backend
 - deploy
 
-job restore-pip-packages:
-    tags:
-    - graph-analytica
-    stage: restore-packages
-    script:
-    - pip3 install -r requirements.txt
 
-job restore-npm-packages:
+job process-frontend:
     tags:
     - graph-analytica
-    stage: restore-packages
+    stage: process-frontend
     script:
     - npm install
     - npm run build-prod
+    cache:
+        key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+        policy: push
+        paths:
+        - dist/
 
-job build:
+job process-backend:
     tags:
     - graph-analytica
-    stage: build
+    stage: process-backend
+    cache:
+        key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+        policy: pull
+        paths:
+        - dist/
     script:
+    - pip3 install -r requirements.txt
     - python3 manage.py collectstatic --noinput
