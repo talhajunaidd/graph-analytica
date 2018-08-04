@@ -1,46 +1,45 @@
 variables:
-  #POSTGRES_DB: database_name
+#POSTGRES_DB: database_name
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
-  untracked: true
-  key: "$CI_BUILD_REF_NAME"
-  paths:
-    - node_modules/
+    untracked: true
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+    - dist/
 
 
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
 before_script:
-  # Print out python version for debugging
-    - python3 -V
-    #- apt-get update -q && apt-get install nodejs -yqq
+# Print out python version for debugging
+- python3 -V
+#- apt-get update -q && apt-get install nodejs -yqq
 
 stages:
-    - restore-packages
-    - build
-    - deploy
+- restore-packages
+- build
+- deploy
 
 job restore-pip-packages:
     tags:
-        - graph-analytica
+    - graph-analytica
     stage: restore-packages
     script:
-        - pip3 install -r requirements.txt
+    - pip3 install -r requirements.txt
 
 job restore-npm-packages:
     tags:
-        - graph-analytica
+    - graph-analytica
     stage: restore-packages
     script:
-        - npm install
+    - npm install
+    - npm run build-prod
 
 job build:
     tags:
-        - graph-analytica
+    - graph-analytica
     stage: build
     script:
-        #- rm -r static
-        - npm run build-prod
-        - python3 manage.py collectstatic
+    - python3 manage.py collectstatic --noinput
