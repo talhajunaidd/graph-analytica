@@ -37,4 +37,5 @@ deploy:
     dependencies:
     - build
     script:
-    - python3 manage.py collectstatic --noinput
+    # - python3 manage.py collectstatic --noinput
+    - cp -r dist /var/www/graphanalytica/
