@@ -37,7 +37,7 @@ job process-backend:
     - graph-analytica
     stage: process-backend
     cache:
-        key: "$CI_COMMIT_REF_SLUG"
+        key: "$CI_BUILD_REF_NAME"
         policy: pull
         paths:
         - dist/
