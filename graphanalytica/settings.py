@@ -9,11 +9,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '@d+wc!%1koug*f!oj)alo0nk1j#ze&41d(i5l!!jq2i_3a135e'
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['18.211.70.234', 'graphanalytica.tk', 'www.graphanalytica.tk']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '18.211.70.234', 'graphanalytica.tk', 'www.graphanalytica.tk']
 
 # Application definition
 
@@ -108,5 +107,3 @@ STATICFILES_DIRS = [
 ]
 # Extra places for collectstatic to find static files.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-
