@@ -100,10 +100,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'dist')
+ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'dist')
 #
-# STATICFILES_DIRS = [
-#     os.path.join(ANGULAR_APP_DIR),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(ANGULAR_APP_DIR),
+]
 # Extra places for collectstatic to find static files.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
