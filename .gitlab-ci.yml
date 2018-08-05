@@ -16,6 +16,7 @@ restore-pip-packages:
 build:
     tags:
     - graph-analytica
+    stage: build
     script:
     - npm install
     - npm run build-prod
