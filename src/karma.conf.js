@@ -17,8 +17,14 @@ module.exports = function (config) {
         },
         coverageIstanbulReporter: {
             dir: require('path').join(__dirname, '../coverage'),
-            reports: ['html', 'lcovonly'],
-            fixWebpackSourcePaths: true
+            reports: ['html', 'lcovonly', 'text-summary'],
+            fixWebpackSourcePaths: true,
+            thresholds: {
+                emitWarning: false,
+                global: {
+                    statements: 80,
+                }
+            }
         },
         reporters: ['progress', 'kjhtml'],
         port: 9876,
@@ -38,5 +44,6 @@ module.exports = function (config) {
                 ],
             }
         },
+
     });
 };
