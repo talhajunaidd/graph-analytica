@@ -36,7 +36,6 @@ build:
     stage: build
     <<: *node
     script:
-    - npm install
     - npm run build-prod
     artifacts:
         paths:
