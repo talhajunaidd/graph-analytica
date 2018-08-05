@@ -51,6 +51,7 @@ test:frontend:
         - node_modules/
     stage: test
     script:
+    - rm -rf coverage
     - npm run test-prod
     artifacts:
         paths:
