@@ -4,26 +4,57 @@ before_script:
 stages:
 - restore-packages
 - build
+- test
 - deploy
 
-restore-pip-packages:
+restore:pip:
     tags:
     - graph-analytica
     stage: restore-packages
     script:
     - pip3 install -r requirements.txt
 
+restore:npm:
+    tags:
+    - graph-analytica
+    cache:
+        key: node_packages
+        policy: push
+        paths:
+        - node_modules/
+    stage: restore-packages
+    script:
+    - npm install
+
 build:
     tags:
     - graph-analytica
     stage: build
+    cache:
+        key: node_packages
+        policy: pull
+        paths:
+        - node_modules/
     script:
-    - npm install
     - npm run build-prod
+    artifacts:
+        paths:
+        - dist/
+
+test:frontend:
+    tags:
+    - graph-analytica
+    cache:
+        key: node_packages
+        policy: pull
+        paths:
+        - node_modules/
+    stage: test
+    script:
     - npm run test-prod
     artifacts:
         paths:
-        - dist/ coverage/*
+        - coverage/*
     coverage: '/(\d*.?\d+)%/'
 deploy:
     tags:
