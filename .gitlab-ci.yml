@@ -45,5 +45,5 @@ deploy:
         paths:
         - graphanalytica core
     script:
-    # - python3 manage.py collectstatic --noinput
-    - sudo cp -r dist/ graphanalytica/ core/ /var/www/graphanalytica/
+    - python3 manage.py collectstatic --noinput
+    - sudo cp -r static/ graphanalytica/ core/ /var/www/graphanalytica/
