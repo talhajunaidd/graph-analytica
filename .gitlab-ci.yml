@@ -19,7 +19,6 @@ restore:npm:
     - graph-analytica
     cache:
         key: node_packages
-        policy: push
         paths:
         - node_modules/
     stage: restore-packages
