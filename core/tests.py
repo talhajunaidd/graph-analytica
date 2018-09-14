@@ -18,23 +18,23 @@ class NetworkTestCase(TestCase):
         self.network_service.add_edge(edge1)
         self.network_service.add_edge(edge2)
         self.network_service.add_edge(edge3)
-        self.network_analyser = NetworkAnalyser(self.network_service.network)
 
     def test_predecessor_combinations(self):
-        predecessor_combinations = self.network_analyser.generate_predecessor_combinations()
+        predecessor_combinations = NetworkAnalyser.get_predecessors(self.network_service.network)
         expected_x = ((), ('y',), ('x',), ('y', 'x'))
         print(predecessor_combinations)
         self.assertTupleEqual(predecessor_combinations['x'], expected_x)
 
-    def test_range_combinations(self):
-        result = self.network_analyser.generate_range_combinations()
+    def test_state_space(self):
+        result = NetworkAnalyser.generate_state_space(self.network_service.network.nodes)
         expected = ((0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1))
         self.assertTupleEqual(result, expected)
 
     def test_state_graph(self):
-        graph = self.network_analyser.generate_state_graph()
+
+        graph = NetworkAnalyser.get_state_graph(self.network_service.network)
         result = list(graph.nodes)
-        expected = ['00', '01', '10', '11', '20', '21']
+        expected = ((0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1))
         self.assertListEqual(result, expected)
 
     def tearDown(self):
