@@ -31,7 +31,7 @@ class NetworkAnalyser:
             yield dict(zip(nodes, element))
 
     @staticmethod
-    def get_state_graph(network: DiGraph):
+    def get_state_graph(network: DiGraph, parameters):
         state_space = list(NetworkAnalyser.generate_state_space(network.nodes))
 
         state_graph = nx.DiGraph()
@@ -55,4 +55,10 @@ class NetworkAnalyser:
                 node[key] = resources
             state_key = tuple(frozenset(state.items()))
             next_state[state_key] = node
+
+        for key, state in next_state.items():
+            for entry_Key, entity in state.items():
+                matched_interaction = next(
+                    filter(lambda x: sorted(x['interaction']) == sorted(entity), parameters[entry_Key]))
+                state[entry_Key] = matched_interaction['value']
         print(next_state)

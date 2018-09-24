@@ -31,8 +31,37 @@ class NetworkTestCase(TestCase):
         self.assertTupleEqual(result, expected)
 
     def test_state_graph(self):
-
-        graph = NetworkAnalyser.get_state_graph(self.network_service.network)
+        parameters = {
+            'x': [
+                {
+                    'interaction': [],
+                    'value': 0
+                },
+                {
+                    'interaction': ['x'],
+                    'value': 2
+                },
+                {
+                    'interaction': ['y'],
+                    'value': 2
+                },
+                {
+                    'interaction': ['x', 'y'],
+                    'value': 2
+                }
+            ],
+            'y': [
+                {
+                    'interaction': [],
+                    'value': 0
+                },
+                {
+                    'interaction': ['x'],
+                    'value': 1
+                }
+            ]
+        }
+        graph = NetworkAnalyser.get_state_graph(self.network_service.network, parameters)
         result = list(graph.nodes)
         expected = ((0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1))
         self.assertListEqual(result, expected)
