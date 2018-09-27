@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.network import NetworkService
+from core.network_analyser import NetworkAnalyser
+from networkx.readwrite import json_graph
 from graphanalytica.api.serializers import NodeSerializer, EdgeSerializer
 
 
@@ -61,3 +63,16 @@ class EdgeView(APIView):
         edge = serializer.create(validated_data=request.data)
         self.network.add_edge(edge)
         return Response()
+
+
+class StateGraphView(APIView):
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+        self.network_analyser = NetworkAnalyser()
+        self.network_service = NetworkService()
+
+    def post(self, request):
+        parameters = request.data
+        state_graph = self.network_analyser.get_state_graph(self.network_service.network, parameters)
+        data = json_graph.node_link_data(state_graph)
+        return Response(data)

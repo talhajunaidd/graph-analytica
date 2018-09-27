@@ -1,6 +1,7 @@
 import {Directive, Input} from '@angular/core';
 import {MatMenuPanel, MatMenuTrigger} from '@angular/material';
 
+// noinspection TsLint
 @Directive({
     selector: '[rightClickTrigger]',
     host: {
@@ -25,7 +26,7 @@ export class RightClickTriggerDirective extends MatMenuTrigger {
 
     handleContext(e) {
         e.preventDefault(); // prevents the browsers context menu
-        // document.getElementById('contextMenu').setAttribute('style', `position: absolute; top:${e.pageY}px; left: ${e.pageX}px`);
-        super._handleClick(e);
+        // document.getElementsByClassName('cdk-overlay-connected-position-bounding-box').setAttribute('style', `top:${e.screenY}px; left: ${e.screenX}px`);
+        this.openMenu();
     }
 }

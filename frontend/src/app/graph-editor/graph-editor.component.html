@@ -1,7 +1,5 @@
 <div class="graph-editor-panel" fxLayout="row" fxLayoutWrap="wrap">
-    <!-- Card column -->
-    <p>Hi</p>
-    <div fxFlex.gt-sm="100%" fxFlex="100" [rightClickTrigger]="contextMenu">
+    <div fxFlex.gt-sm="100%" fxFlex="100">
         <mat-card>
             <mat-card-header>
                 <div fxFlex="row" fxLayoutAlign="space-between center">
@@ -14,15 +12,19 @@
                 </div>
             </mat-card-header>
             <mat-card-content>
-                <app-ngx-cytoscape></app-ngx-cytoscape>
+                <app-ngx-cytoscape [rightClickTrigger]="contextMenu">
+                    <mat-menu #contextMenu id="contextMenu">
+                        <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
+                        <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
+                    </mat-menu>
+                </app-ngx-cytoscape>
+
             </mat-card-content>
+
         </mat-card>
+
     </div>
 </div>
-<mat-menu #contextMenu id="contextMenu">
-    <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
-    <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
-</mat-menu>
 
 <mat-menu #importFormatMenu>
     <button mat-menu-item (click)="fileInput.click()">*.GraphML</button>

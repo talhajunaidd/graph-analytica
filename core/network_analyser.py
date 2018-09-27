@@ -31,7 +31,7 @@ class NetworkAnalyser:
             yield dict(zip(nodes, element))
 
     @staticmethod
-    def get_state_graph(network: DiGraph, parameters):
+    def get_state_graph(network: DiGraph, parameters) -> DiGraph:
         state_space = list(NetworkAnalyser.generate_state_space(network.nodes))
         state_graph = nx.DiGraph()
         state_space_nodes = [utils.create_node_from_dict(entry) for entry in state_space]
