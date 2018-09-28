@@ -18,7 +18,7 @@ import {
     MatTabsModule,
     MatTreeModule
 } from '@angular/material';
-import {NgxNetworkXModule} from '../ngx-networkx/ngx-network-x.module';
+
 import {RightClickTriggerDirective} from '../../_directives/right-click-trigger';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GraphService} from '../../_services/graph.service';

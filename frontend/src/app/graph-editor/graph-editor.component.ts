@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {GraphService} from '../../_services/graph.service';
 import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
@@ -6,6 +6,9 @@ import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
 import {EdgeInputDialogComponent} from './edge-input-dialog/edge-input-dialog.component';
 import {NodeLinkView} from '../../_models/NodeLinkView';
 import {Router} from '@angular/router';
+import {NgxCytoscapeComponent} from '../ngx-cytoscape/ngx-cytoscape.component';
+import IEdgeInput from './utils/IEdgeInput';
+import {GraphUtils} from '../../utils/graph.utils';
 
 @Component({
     selector: 'app-graph-editor',
@@ -13,9 +16,22 @@ import {Router} from '@angular/router';
     styleUrls: ['./graph-editor.component.css'],
 })
 export class GraphEditorComponent implements OnInit {
+    @ViewChild(NgxCytoscapeComponent)
+    cy: NgxCytoscapeComponent;
+
     private newNodeName: string;
     private progress: number;
     private message: string;
+    elements: any;
+
+    layout = {
+        name: 'grid',
+        directed: true,
+        animate: true,
+        animationDuration: 500,
+        avoidOverlap: true,
+        padding: 30
+    };
 
 
     constructor(private element: ElementRef,
@@ -30,9 +46,8 @@ export class GraphEditorComponent implements OnInit {
 
     ngOnInit() {
         this._httpClient.get<NodeLinkView>('api/graph/').subscribe((res) => {
-            this._graphService.importNodeLinkData(res);
+            this.elements = this._graphService.importNodeLinkData(res);
         });
-
     }
 
     openAddNodeDialog(): void {
@@ -40,7 +55,9 @@ export class GraphEditorComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this._graphService.addNode(result);
+                this._httpClient.post('api/node/', result).subscribe(z => {
+                    this.cy.addElement(GraphUtils.buildNode(result));
+                });
             }
         });
     }
@@ -62,12 +79,15 @@ export class GraphEditorComponent implements OnInit {
 
     openAddEdgeDialog(): void {
         const dialogRef = this.dialog.open(EdgeInputDialogComponent, {
-            data: {nodes: this._graphService.getNodes()}
+            data: {nodes: this.cy.nodes}
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this._graphService.addEdge(result);
+                const data = GraphUtils.transformEdgeData(result);
+                this._httpClient.post('api/edge/', data).subscribe(z => {
+                    this.cy.addElement({group: 'edges', data: data});
+                });
             }
         });
     }

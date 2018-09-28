@@ -1,4 +1,4 @@
-import NxNode from '../app/ngx-cytoscape/models/cy-node';
+import CyNode from '../app/ngx-cytoscape/models/cy-node';
 
 export class NodeLinkView {
     directed: boolean;

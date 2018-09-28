@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import {GraphService} from '../../_services/graph.service';
 
@@ -9,7 +9,7 @@ import {GraphService} from '../../_services/graph.service';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxCytoscapeComponent implements OnInit {
+export class NgxCytoscapeComponent implements OnInit, OnChanges {
 
     private _elements: any;
     private _style: any;
@@ -56,9 +56,9 @@ export class NgxCytoscapeComponent implements OnInit {
             });
     }
 
-    /*public ngOnChanges(): any {
+    public ngOnChanges(): any {
         this.render();
-    }*/
+    }
 
     public ngOnInit(): void {
         this.render();
@@ -68,7 +68,6 @@ export class NgxCytoscapeComponent implements OnInit {
         if (!this.cy) {
             this.cy = cytoscape({
                 container: this.el.nativeElement,
-                layout: this.layout,
                 minZoom: this.zoom.min,
                 maxZoom: this.zoom.max,
                 style: this.style,
@@ -78,13 +77,14 @@ export class NgxCytoscapeComponent implements OnInit {
             this.cy.delayAnimation(1000);
 
         } else {
-            this.cy.layout = this.layout;
-            this.cy.nodes().remove();
+            this.cy.elements().remove();
             this.cy.add(this.elements);
             this.cy.minZoom(this.zoom.min);
             this.cy.maxZoom(this.zoom.max);
             this.cy.delayAnimation(1000);
         }
+        const layout = this.cy.layout(this.layout);
+        layout.run();
     }
 
 
@@ -140,6 +140,14 @@ export class NgxCytoscapeComponent implements OnInit {
     @Input()
     set el(value: ElementRef) {
         this._el = value;
+    }
+
+    addElement(element) {
+        this._cy.add(element);
+    }
+
+    get nodes() {
+        return this.cy.nodes().map(node => node.id());
     }
 
 }

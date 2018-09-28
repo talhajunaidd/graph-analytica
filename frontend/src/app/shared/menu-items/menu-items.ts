@@ -26,6 +26,7 @@ const MENUITEMS = [
 @Injectable()
 
 export class MenuItems {
+    badge: string;
     getMenuitem(): Menu[] {
         return MENUITEMS;
     }

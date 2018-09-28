@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MenuItems} from '../../../shared/menu-items/menu-items';
 
@@ -7,7 +7,7 @@ import {MenuItems} from '../../../shared/menu-items/menu-items';
     templateUrl: './sidebar.component.html',
     styleUrls: []
 })
-export class AppSidebarComponent {
+export class AppSidebarComponent implements OnDestroy {
     mobileQuery: MediaQueryList;
 
     private _mobileQueryListener: () => void;

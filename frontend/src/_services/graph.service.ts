@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import IEdgeInput from '../app/graph-editor/utils/IEdgeInput';
-import NxNode from '../app/ngx-cytoscape/models/cy-node';
+import CyNode from '../app/ngx-cytoscape/models/cy-node';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -8,22 +8,6 @@ import {HttpClient} from '@angular/common/http';
 })
 export class GraphService {
     private cy: any;
-    elements = [ // list of graph elements to start with
-        { // node a
-            data: {id: 'a'},
-            position: { // the model position of the node (optional on init, mandatory after)
-                x: 100,
-                y: 200
-            },
-        },
-        { // node b
-            data: {id: 'b'},
-            position: { // the model position of the node (optional on init, mandatory after)
-                x: 200,
-                y: 100
-            },
-        }
-    ];
 
     static transformEdgeData(result: IEdgeInput) {
         let weight = result.threshold;
@@ -47,10 +31,9 @@ export class GraphService {
 
     registerCy(cy: any) {
         this.cy = cy;
-        /*this.cy.add(this.elements);*/
     }
 
-    addNode(node: NxNode) {
+    addNode(node: CyNode) {
         this._httpClient.post('api/node/', node).subscribe(z => {
             this.cy.add(this.buildNode(node));
         });
@@ -67,11 +50,7 @@ export class GraphService {
                 id: node.id,
                 min: node.min,
                 max: node.max
-            },
-            position: { // the model position of the node (optional on init, mandatory after)
-                x: GraphService.getRandomNumber(),
-                y: GraphService.getRandomNumber()
-            },
+            }
         };
     }
 
@@ -98,7 +77,7 @@ export class GraphService {
         this.cy.elements().remove();
         const nodes = this.buildNodes(body.nodes);
         this.cy.add(nodes);
-        const list = body.links.map(link => {
+        const edges = body.links.map(link => {
             const edge = {
                 id: `${link.source}-${link.target}`,
                 source: link.source,
@@ -110,7 +89,12 @@ export class GraphService {
                 data: edge
             };
         });
-        this.cy.add(list);
-
+        // this.cy.add(list);
+        // const gridLayout = this.cy.layout({
+        //     name: 'grid'
+        // });
+        // gridLayout.run();
+        nodes.push(...edges);
+        return nodes;
     }
 }
