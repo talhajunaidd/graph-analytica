@@ -1,4 +1,4 @@
-export default interface ICyNode {
+export default interface NxNode {
     id: string;
     parent?: string;
     min: number;

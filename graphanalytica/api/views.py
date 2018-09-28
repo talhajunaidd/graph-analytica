@@ -2,13 +2,13 @@
 from wsgiref.util import FileWrapper
 
 from django.http import HttpResponse
+from networkx.readwrite import json_graph
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.network import NetworkService
 from core.network_analyser import NetworkAnalyser
-from networkx.readwrite import json_graph
 from graphanalytica.api.serializers import NodeSerializer, EdgeSerializer
 
 
@@ -75,4 +75,14 @@ class StateGraphView(APIView):
         parameters = request.data
         state_graph = self.network_analyser.get_state_graph(self.network_service.network, parameters)
         data = json_graph.node_link_data(state_graph)
+        return Response(data)
+
+
+class GraphView(APIView):
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+        self.network_service = NetworkService()
+
+    def get(self, request):
+        data = json_graph.node_link_data(self.network_service.network)
         return Response(data)

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import IEdgeInput from '../app/graph-editor/utils/IEdgeInput';
-import ICyNode from '../app/ngx-cytoscape/models/cy-node';
+import NxNode from '../app/ngx-cytoscape/models/cy-node';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -50,17 +50,17 @@ export class GraphService {
         /*this.cy.add(this.elements);*/
     }
 
-    addNode(node: ICyNode) {
+    addNode(node: NxNode) {
         this._httpClient.post('api/node/', node).subscribe(z => {
             this.cy.add(this.buildNode(node));
         });
     }
 
-    private buildNodes(nodes: ICyNode[]) {
+    private buildNodes(nodes) {
         return nodes.map(node => this.buildNode(node));
     }
 
-    private buildNode(node: ICyNode) {
+    private buildNode(node) {
         return {
             group: 'nodes',
             data: {
@@ -94,26 +94,23 @@ export class GraphService {
         });
     }
 
-    importAdjacency(body: any) {
+    importNodeLinkData(body) {
         this.cy.elements().remove();
         const nodes = this.buildNodes(body.nodes);
         this.cy.add(nodes);
-        body.adjacency.forEach((targetNode, nodeIndex) => {
-            const list = targetNode.map((targetedge, edgeIndex) => {
-                const sourceNode = body.nodes[nodeIndex];
-                const edge = {
-                    id: sourceNode.id + targetedge.id,
-                    source: sourceNode.id,
-                    target: targetedge.id,
-                    weight: targetedge.weight
-                };
-                return {
-                    group: 'edges',
-                    data: edge
-                };
-            });
-            this.cy.add(list);
+        const list = body.links.map(link => {
+            const edge = {
+                id: `${link.source}-${link.target}`,
+                source: link.source,
+                target: link.target,
+                weight: link.weight
+            };
+            return {
+                group: 'edges',
+                data: edge
+            };
         });
+        this.cy.add(list);
 
     }
 }

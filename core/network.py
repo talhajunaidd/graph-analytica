@@ -33,7 +33,7 @@ class NetworkService:
     def import_graphml(self, file):
         self.network = nx.read_graphml(file)
         self.persist_network()
-        return json_graph.adjacency_data(self.network)
+        return json_graph.node_link_data(self.network)
 
     def export_graphml(self):
         file = open(graphml_file_name, "wb")

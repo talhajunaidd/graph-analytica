@@ -4,7 +4,8 @@ import {GraphService} from '../../_services/graph.service';
 import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
 import {HttpClient, HttpEventType, HttpRequest} from '@angular/common/http';
 import {EdgeInputDialogComponent} from './edge-input-dialog/edge-input-dialog.component';
-
+import {NodeLinkView} from '../../_models/NodeLinkView';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-graph-editor',
@@ -20,13 +21,18 @@ export class GraphEditorComponent implements OnInit {
     constructor(private element: ElementRef,
                 private dialog: MatDialog,
                 private _graphService: GraphService,
-                private _httpClient: HttpClient, private _snackBar: MatSnackBar
+                private _httpClient: HttpClient, private _snackBar: MatSnackBar,
+                private router: Router
     ) {
 
     }
 
 
     ngOnInit() {
+        this._httpClient.get<NodeLinkView>('api/graph/').subscribe((res) => {
+            this._graphService.importNodeLinkData(res);
+        });
+
     }
 
     openAddNodeDialog(): void {
@@ -43,14 +49,14 @@ export class GraphEditorComponent implements OnInit {
         this._httpClient.get('api/file/', {responseType: 'blob'}).subscribe((res) => {
             console.log('start download:', res);
             const url = window.URL.createObjectURL(res);
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.setAttribute('style', 'display: none');
-            a.href = url;
-            a.download = 'network.graphml';
-            a.click();
+            const linkElement = document.createElement('a');
+            document.body.appendChild(linkElement);
+            linkElement.setAttribute('style', 'display: none');
+            linkElement.href = url;
+            linkElement.download = 'network.graphml';
+            linkElement.click();
             window.URL.revokeObjectURL(url);
-            a.remove();
+            linkElement.remove();
         });
     }
 
@@ -82,8 +88,12 @@ export class GraphEditorComponent implements OnInit {
             if (httpEvent.type === HttpEventType.UploadProgress) {
                 this.progress = Math.round(100 * httpEvent.loaded / httpEvent.total);
             } else if (httpEvent.type === HttpEventType.Response) {
-                this._graphService.importAdjacency(httpEvent.body);
+                this._graphService.importNodeLinkData(httpEvent.body);
             }
         });
+    }
+
+    generate_state_graph() {
+        this.router.navigate(['stategraph']);
     }
 }

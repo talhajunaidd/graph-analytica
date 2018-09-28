@@ -12,13 +12,13 @@
                 </div>
             </mat-card-header>
             <mat-card-content>
-                <app-ngx-cytoscape [rightClickTrigger]="contextMenu">
-                    <mat-menu #contextMenu id="contextMenu">
+                <app-ngx-cytoscape [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
+                <mat-menu #contextMenu id="contextMenu">
                         <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
                         <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item (click)="generate_state_graph()">State Graph</button>
                     </mat-menu>
-                </app-ngx-cytoscape>
-
             </mat-card-content>
 
         </mat-card>

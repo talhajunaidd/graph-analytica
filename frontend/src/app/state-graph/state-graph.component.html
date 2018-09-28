@@ -1,0 +1,64 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex.gt-sm="100%" fxFlex="100">
+        <mat-card>
+            <mat-card-header>
+                <div fxFlex="row" fxLayoutAlign="space-between center">
+                    <mat-card-title fxFlexOrder="1">State Graph</mat-card-title>
+                    <div fxFlexOrder="2">
+                        <button mat-button>Export</button>
+                    </div>
+                </div>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Parameters
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                                <label class="interaction-label">{{node.filename}}</label>
+                                <mat-form-field>
+                                    <input matInput #itemValue [placeholder]="node.filename">
+                                </mat-form-field>
+                            </mat-tree-node>
+
+
+                            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                                <button mat-icon-button matTreeNodeToggle
+                                        [attr.aria-label]="'toggle ' + node.filename">
+                                    <mat-icon class="mat-icon-rtl-mirror">
+                                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                    </mat-icon>
+
+
+                                </button>
+                                {{node.filename}}
+                            </mat-tree-node>
+                        </mat-tree>
+                        <mat-action-row>
+                            <button mat-button color="primary">Generate</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                    <!--<mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"-->
+                                         <!--(closed)="panelOpenState = false">-->
+                        <!--<mat-expansion-panel-header>-->
+                            <!--<mat-panel-title>-->
+                                <!--Self aware panel-->
+                            <!--</mat-panel-title>-->
+                            <!--<mat-panel-description>-->
+                                <!--Currently I am {{panelOpenState ? 'open' : 'closed'}}-->
+                            <!--</mat-panel-description>-->
+                        <!--</mat-expansion-panel-header>-->
+                        <!--<p>I'm visible because I am open</p>-->
+                    <!--</mat-expansion-panel>-->
+                    <app-ngx-cytoscape></app-ngx-cytoscape>
+                </mat-accordion>
+            </mat-card-content>
+
+        </mat-card>
+
+    </div>
+</div>

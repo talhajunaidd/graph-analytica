@@ -1,10 +1,10 @@
 import ICyEdge from './cy-edge';
 
-import ICyNode from './cy-node';
+import NxNode from './cy-node';
 
 export default interface ICyElement {
     group: string;
-    data?: ICyNode | ICyEdge;
+    data?: NxNode | ICyEdge;
     scratch?: any;
     position: any;
 
