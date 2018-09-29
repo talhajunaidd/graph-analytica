@@ -12,9 +12,6 @@ export const AppRoutes: Routes = [{
             redirectTo: '/editor',
             pathMatch: 'full'
         }, {
-            path: '',
-            loadChildren: './material-component/material.module#MaterialComponentsModule'
-        }, {
             path: 'editor',
             loadChildren: './graph-editor/graph-editor.module#GraphEditorModule'
         },

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import * as cytoscape from 'cytoscape';
-import {GraphService} from '../../_services/graph.service';
 import * as dagre from 'cytoscape-dagre';
+import {GraphService} from '../../_services/graph.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import * as dagre from 'cytoscape-dagre';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxCytoscapeComponent implements OnInit, OnChanges {
+export class NgxCytoscapeComponent implements OnChanges {
 
     private _elements: any;
     private _style: any;
@@ -59,25 +59,29 @@ export class NgxCytoscapeComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(): any {
-        this.cy.elements().remove();
-        this.cy.add(this.elements);
-        this.cy.minZoom(this.zoom.min);
-        this.cy.maxZoom(this.zoom.max);
-        this.cy.delayAnimation(1000);
-        this.runLayout(this.layout);
+        this.render();
     }
 
-    public ngOnInit(): void {
-        this.cy = cytoscape({
-            container: this.el.nativeElement,
-            minZoom: this.zoom.min,
-            maxZoom: this.zoom.max,
-            style: this.style,
-            elements: this.elements,
-        });
-        this.cy.use(dagre);
-        this._graphService.registerCy(this.cy);
-        this.cy.delayAnimation(1000);
+    public render() {
+        if (!this.cy) {
+            this.cy = cytoscape({
+                container: this.el.nativeElement,
+                minZoom: this.zoom.min,
+                maxZoom: this.zoom.max,
+                style: this.style,
+                elements: this.elements
+            });
+            this._graphService.registerCy(this._cy);
+            this.cy.delayAnimation(1000);
+
+        } else {
+            this.cy.elements().remove();
+            this.cy.add(this.elements);
+            this.cy.minZoom(this.zoom.min);
+            this.cy.maxZoom(this.zoom.max);
+            this.cy.delayAnimation(1000);
+        }
+        this.runLayout(this.layout);
     }
 
     get elements(): any {
@@ -145,5 +149,4 @@ export class NgxCytoscapeComponent implements OnInit, OnChanges {
     runLayout(layout) {
         this.cy.layout(layout).run();
     }
-
 }
