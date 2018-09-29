@@ -74,9 +74,7 @@ export class GraphService {
     }
 
     importNodeLinkData(body) {
-        this.cy.elements().remove();
         const nodes = this.buildNodes(body.nodes);
-        this.cy.add(nodes);
         const edges = body.links.map(link => {
             const edge = {
                 id: `${link.source}-${link.target}`,

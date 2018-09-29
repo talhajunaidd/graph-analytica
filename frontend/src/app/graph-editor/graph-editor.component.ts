@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {NgxCytoscapeComponent} from '../ngx-cytoscape/ngx-cytoscape.component';
 import IEdgeInput from './utils/IEdgeInput';
 import {GraphUtils} from '../../utils/graph.utils';
+import {AvailableCyLayouts, CyLayout} from './utils/available-cy-layouts';
 
 @Component({
     selector: 'app-graph-editor',
@@ -18,7 +19,6 @@ import {GraphUtils} from '../../utils/graph.utils';
 export class GraphEditorComponent implements OnInit {
     @ViewChild(NgxCytoscapeComponent)
     cy: NgxCytoscapeComponent;
-
     private newNodeName: string;
     private progress: number;
     private message: string;
@@ -33,6 +33,7 @@ export class GraphEditorComponent implements OnInit {
         padding: 30
     };
 
+    availableLayouts: CyLayout[];
 
     constructor(private element: ElementRef,
                 private dialog: MatDialog,
@@ -45,8 +46,9 @@ export class GraphEditorComponent implements OnInit {
 
 
     ngOnInit() {
+        this.availableLayouts = AvailableCyLayouts;
         this._httpClient.get<NodeLinkView>('api/graph/').subscribe((res) => {
-            this.elements = this._graphService.importNodeLinkData(res);
+            this.elements = GraphUtils.importNodeLinkData(res);
         });
     }
 
@@ -116,4 +118,9 @@ export class GraphEditorComponent implements OnInit {
     generate_state_graph() {
         this.router.navigate(['stategraph']);
     }
+
+    setLayout(id: string) {
+        this.cy.runLayout({name: id});
+    }
+
 }

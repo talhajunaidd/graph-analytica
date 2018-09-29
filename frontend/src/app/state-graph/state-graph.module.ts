@@ -28,7 +28,7 @@ import {StateGraphRoutes} from './state-graph.routing';
 
 @NgModule({
     imports: [
-        CommonModule, RouterModule.forChild(StateGraphRoutes), FlexLayoutModule, MatCardModule, MatTabsModule, NgxNetworkXModule,
+        CommonModule, RouterModule.forChild(StateGraphRoutes), FlexLayoutModule, MatCardModule, MatTabsModule,
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
         ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule,
         MatSnackBarModule, MatExpansionModule, MatTreeModule, MatIconModule

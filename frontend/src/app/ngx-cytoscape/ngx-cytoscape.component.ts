@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import {GraphService} from '../../_services/graph.service';
+import * as dagre from 'cytoscape-dagre';
+
 
 @Component({
     selector: 'app-ngx-cytoscape',
@@ -57,36 +59,26 @@ export class NgxCytoscapeComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(): any {
-        this.render();
+        this.cy.elements().remove();
+        this.cy.add(this.elements);
+        this.cy.minZoom(this.zoom.min);
+        this.cy.maxZoom(this.zoom.max);
+        this.cy.delayAnimation(1000);
+        this.runLayout(this.layout);
     }
 
     public ngOnInit(): void {
-        this.render();
+        this.cy = cytoscape({
+            container: this.el.nativeElement,
+            minZoom: this.zoom.min,
+            maxZoom: this.zoom.max,
+            style: this.style,
+            elements: this.elements,
+        });
+        this.cy.use(dagre);
+        this._graphService.registerCy(this.cy);
+        this.cy.delayAnimation(1000);
     }
-
-    public render() {
-        if (!this.cy) {
-            this.cy = cytoscape({
-                container: this.el.nativeElement,
-                minZoom: this.zoom.min,
-                maxZoom: this.zoom.max,
-                style: this.style,
-                elements: this.elements,
-            });
-            this._graphService.registerCy(this._cy);
-            this.cy.delayAnimation(1000);
-
-        } else {
-            this.cy.elements().remove();
-            this.cy.add(this.elements);
-            this.cy.minZoom(this.zoom.min);
-            this.cy.maxZoom(this.zoom.max);
-            this.cy.delayAnimation(1000);
-        }
-        const layout = this.cy.layout(this.layout);
-        layout.run();
-    }
-
 
     get elements(): any {
         return this._elements;
@@ -148,6 +140,10 @@ export class NgxCytoscapeComponent implements OnInit, OnChanges {
 
     get nodes() {
         return this.cy.nodes().map(node => node.id());
+    }
+
+    runLayout(layout) {
+        this.cy.layout(layout).run();
     }
 
 }

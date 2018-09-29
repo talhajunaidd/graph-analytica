@@ -28,6 +28,7 @@
         "@angular/router": "6.1.6",
         "core-js": "^2.5.7",
         "cytoscape": "^3.2.16",
+        "cytoscape-dagre": "^2.2.2",
         "d3": "^3.5.17",
         "jquery": "^3.3.1",
         "jsnetworkx": "^0.3.4",

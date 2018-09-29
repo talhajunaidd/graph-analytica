@@ -24,4 +24,26 @@ export class GraphUtils {
             weight: weight
         };
     }
+
+    static buildNodes(nodes) {
+        return nodes.map(node => GraphUtils.buildNode(node));
+    }
+
+    static importNodeLinkData(body) {
+        const nodes = GraphUtils.buildNodes(body.nodes);
+        const edges = body.links.map(link => {
+            const edge = {
+                id: `${link.source}-${link.target}`,
+                source: link.source,
+                target: link.target,
+                weight: link.weight
+            };
+            return {
+                group: 'edges',
+                data: edge
+            };
+        });
+        nodes.push(...edges);
+        return nodes;
+    }
 }
