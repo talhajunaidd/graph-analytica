@@ -4,47 +4,44 @@
             <mat-card-header>
                 <div fxFlex="row" fxLayoutAlign="space-between center">
                     <mat-card-title fxFlexOrder="1">State Graph</mat-card-title>
-                    <div fxFlexOrder="2">
-                        <button mat-button>Export</button>
-                    </div>
+                    <!--<div fxFlexOrder="2">-->
+                        <!--<button mat-button>Export</button>-->
+                    <!--</div>-->
                 </div>
             </mat-card-header>
             <mat-card-content>
                 <mat-accordion>
-                    <mat-expansion-panel>
+                    <mat-expansion-panel #panel [expanded]="true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 Parameters
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                                <label class="interaction-label">{{node.filename}}</label>
+                        <mat-expansion-panel  class="interaction-input-form-field" *ngFor="let item of parameters  | keyvalue">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <label>Possible interactions for {{item.key}}</label>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let inter of item.value">
+                                <!--<label for="interactionValue">[{{inter.interaction}}]</label>-->
                                 <mat-form-field>
-                                    <input matInput #itemValue [placeholder]="node.filename">
+                                    <input id="interactionValue" matInput type="number" placeholder="[{{inter.interaction}}]" [(ngModel)]="inter.value">
                                 </mat-form-field>
-                            </mat-tree-node>
-
-
-                            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-                                <button mat-icon-button matTreeNodeToggle
-                                        [attr.aria-label]="'toggle ' + node.filename">
-                                    <mat-icon class="mat-icon-rtl-mirror">
-                                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                    </mat-icon>
-
-
-                                </button>
-                                {{node.filename}}
-                            </mat-tree-node>
-                        </mat-tree>
+                            </div>
+                        </mat-expansion-panel>
                         <mat-action-row>
-                            <button mat-button color="primary">Generate</button>
+                            <button mat-button color="primary" (click)="generate_state_graph()">Generate</button>
                         </mat-action-row>
                     </mat-expansion-panel>
-                    <app-ngx-cytoscape></app-ngx-cytoscape>
+                    <app-ngx-cytoscape [layout]="layout" [elements]="elements" [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
                 </mat-accordion>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
+
+<mat-menu #contextMenu id="contextMenu">
+    <app-cy-layout [layouts]="availableLayouts" menuName="Layouts" (layoutChange)="setLayout($event)"></app-cy-layout>
+</mat-menu>
+

@@ -1,7 +1,6 @@
 import {Directive, Input} from '@angular/core';
 import {MatMenuPanel, MatMenuTrigger} from '@angular/material';
 
-// noinspection TsLint
 @Directive({
     selector: '[rightClickTrigger]',
     host: {

@@ -82,7 +82,8 @@ class NetworkAnalyser:
     def calculate_k(resources, parameters):
         for resource_key, entities in resources.items():
             for entity_key, entity in entities.items():
-                matched_interaction = filter(lambda x: sorted(x['interaction']) == sorted(entity), parameters[entity_key])
+                matched_interaction = filter(lambda x: sorted(x['interaction']) == sorted(entity),
+                                             parameters[entity_key])
                 first_interaction = next(matched_interaction)
                 entities[entity_key] = first_interaction['value']
         return resources
@@ -107,3 +108,13 @@ class NetworkAnalyser:
             state_key = tuple(state.items())
             resources[state_key] = node
         return resources
+
+    def get_required_parameters(self, network: DiGraph):
+        nodes = network.nodes
+        parameters = dict()
+        for node in nodes:
+            predecessors = tuple(nx.DiGraph.predecessors(network, node))
+            required_interactions = [{'interaction': interaction, 'value': None} for interaction in
+                                     utils.all_subsets(predecessors)]
+            parameters[node] = required_interactions
+        return parameters

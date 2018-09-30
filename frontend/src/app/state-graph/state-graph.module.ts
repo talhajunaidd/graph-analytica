@@ -23,17 +23,19 @@ import {RightClickTriggerDirective} from '../../_directives/right-click-trigger'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GraphService} from '../../_services/graph.service';
 import {NgxCytoscapeModule} from '../ngx-cytoscape/ngx-cytoscape.module';
-import {FileDatabase, StateGraphComponent} from './state-graph.component';
 import {StateGraphRoutes} from './state-graph.routing';
+import {StateGraphComponent} from './state-graph.component';
+import {CyLayoutModule} from '../cy-layout/cy-layout.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     imports: [
         CommonModule, RouterModule.forChild(StateGraphRoutes), FlexLayoutModule, MatCardModule, MatTabsModule,
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
         ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule,
-        MatSnackBarModule, MatExpansionModule, MatTreeModule, MatIconModule
+        MatSnackBarModule, MatExpansionModule, MatTreeModule, MatIconModule, CyLayoutModule, SharedModule
     ],
-    providers: [GraphService, FileDatabase],
+    providers: [GraphService],
     declarations: [StateGraphComponent]
 })
 export class StateGraphModule {

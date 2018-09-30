@@ -14,13 +14,7 @@
             <mat-card-content>
                 <app-ngx-cytoscape [elements]="elements" [layout]="layout"
                                    [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
-                <mat-menu #contextMenu id="contextMenu">
-                    <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
-                    <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item (click)="generate_state_graph()">State Graph</button>
-                    <button mat-menu-item [matMenuTriggerFor]="availableLayoutsMenu">Layouts</button>
-                </mat-menu>
+
             </mat-card-content>
 
         </mat-card>
@@ -28,12 +22,16 @@
     </div>
 </div>
 
-<mat-menu #availableLayoutsMenu="matMenu">
-    <button mat-menu-item (click)="setLayout(item.id)" *ngFor="let item of availableLayouts">{{item.name}}</button>
-</mat-menu>
-
 <mat-menu #importFormatMenu>
     <button mat-menu-item (click)="fileInput.click()">*.GraphML</button>
     <button mat-menu-item disabled>*.dot</button>
     <button mat-menu-item disabled>*.sif</button>
+</mat-menu>
+
+<mat-menu #contextMenu id="contextMenu">
+    <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
+    <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="generate_state_graph()">State Graph</button>
+    <app-cy-layout [layouts]="availableLayouts" menuName="Layouts" (layoutChange)="setLayout($event)"></app-cy-layout>
 </mat-menu>

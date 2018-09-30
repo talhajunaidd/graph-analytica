@@ -19,9 +19,8 @@ import {AvailableCyLayouts, CyLayout} from './utils/available-cy-layouts';
 export class GraphEditorComponent implements OnInit {
     @ViewChild(NgxCytoscapeComponent)
     cy: NgxCytoscapeComponent;
-    private newNodeName: string;
-    private progress: number;
-    private message: string;
+
+    progress: number;
     elements: any;
 
     layout = {
@@ -119,8 +118,7 @@ export class GraphEditorComponent implements OnInit {
         this.router.navigate(['stategraph']);
     }
 
-    setLayout(id: string) {
-        this.cy.runLayout({name: id});
+    setLayout(event) {
+        this.cy.runLayout({name: event.id});
     }
-
 }

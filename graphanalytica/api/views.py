@@ -86,3 +86,19 @@ class GraphView(APIView):
     def get(self, request):
         data = json_graph.node_link_data(self.network_service.network)
         return Response(data)
+
+
+class StateGraphParametersView(APIView):
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+        self.network_service = NetworkService()
+        self.network_analyser = NetworkAnalyser()
+
+    def get(self, request):
+        parameters = self.network_analyser.get_required_parameters(self.network_service.network)
+        return Response(parameters)
+
+
+
+
+

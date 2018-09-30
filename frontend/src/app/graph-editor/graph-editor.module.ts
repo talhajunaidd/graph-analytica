@@ -21,17 +21,19 @@ import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.co
 import {GraphEditorComponent} from './graph-editor.component';
 import {EdgeInputDialogComponent} from './edge-input-dialog/edge-input-dialog.component';
 import {NgxCytoscapeModule} from '../ngx-cytoscape/ngx-cytoscape.module';
+import {CyLayoutModule} from '../cy-layout/cy-layout.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     imports: [
         CommonModule, RouterModule.forChild(GraphEditorRoutes), FlexLayoutModule, MatCardModule, MatTabsModule,
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
         ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule,
-        MatSnackBarModule
+        MatSnackBarModule, CyLayoutModule, SharedModule
     ],
     providers: [GraphService],
     entryComponents: [NodeInputDialogComponent, EdgeInputDialogComponent],
-    declarations: [GraphEditorComponent, RightClickTriggerDirective, NodeInputDialogComponent, EdgeInputDialogComponent]
+    declarations: [GraphEditorComponent, NodeInputDialogComponent, EdgeInputDialogComponent]
 })
 export class GraphEditorModule {
 }
