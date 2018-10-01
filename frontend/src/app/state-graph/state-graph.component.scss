@@ -1,4 +1,4 @@
-.interaction-label{
+.interaction-label {
     padding-right: 1em;
 }
 
@@ -7,10 +7,11 @@ mat-card-header {
     background: rgba(0, 0, 0, .03);
 }
 
-mat-card-content{
+.cytoscape-container {
     height: 100vh;
+    padding-top: 1em;
 }
 
-.interaction-input-form-field{
+.interaction-input-form-field {
     width: 50%;
 }

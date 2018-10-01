@@ -11,7 +11,7 @@
             </mat-card-header>
             <mat-card-content>
                 <mat-accordion>
-                    <mat-expansion-panel #panel [expanded]="true">
+                    <mat-expansion-panel #panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 Parameters
@@ -34,7 +34,10 @@
                             <button mat-button color="primary" (click)="generate_state_graph()">Generate</button>
                         </mat-action-row>
                     </mat-expansion-panel>
-                    <app-ngx-cytoscape [layout]="layout" [elements]="elements" [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
+                    <div class="cytoscape-container">
+                        <app-ngx-cytoscape [layout]="layout" [elements]="elements" [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
+                    </div>
+
                 </mat-accordion>
             </mat-card-content>
         </mat-card>

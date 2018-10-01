@@ -1,0 +1,5 @@
+<button mat-menu-item [matMenuTriggerFor]="availableLayoutsMenu">{{menuName}}</button>
+
+<mat-menu #availableLayoutsMenu="matMenu">
+    <button mat-menu-item (click)="layoutChange.emit(item)" *ngFor="let item of layouts">{{item.name}}</button>
+</mat-menu>

@@ -4,6 +4,9 @@ import {HttpClient} from '@angular/common/http';
 import {NgxCytoscapeComponent} from '../ngx-cytoscape/ngx-cytoscape.component';
 import {GraphUtils} from '../../utils/graph.utils';
 import {AvailableCyLayouts, CyLayout} from '../graph-editor/utils/available-cy-layouts';
+import {MatSnackBar} from '@angular/material';
+import {StateGraphLoadingSnackComponent} from './state-graph-loading-snack.component';
+import {finalize} from 'rxjs/operators';
 
 @Component({
     selector: 'app-state-graph',
@@ -11,6 +14,7 @@ import {AvailableCyLayouts, CyLayout} from '../graph-editor/utils/available-cy-l
     styleUrls: ['./state-graph.component.scss'],
 })
 export class StateGraphComponent implements OnInit {
+    panelOpenState = true;
     availableLayouts: CyLayout[] = AvailableCyLayouts;
     parameters: any;
     elements: any;
@@ -25,7 +29,7 @@ export class StateGraphComponent implements OnInit {
         padding: 30
     };
 
-    constructor(private graphService: GraphService, private httpClient: HttpClient) {
+    constructor(private graphService: GraphService, private httpClient: HttpClient, public snackBar: MatSnackBar) {
 
     }
 
@@ -36,8 +40,14 @@ export class StateGraphComponent implements OnInit {
     }
 
     generate_state_graph() {
-        this.httpClient.post('api/graph/stategraph/', this.parameters).subscribe((res) => {
-            this.elements = GraphUtils.importNodeLinkData(res);
+        const snackBarRef = this.snackBar.openFromComponent(StateGraphLoadingSnackComponent);
+        this.httpClient.post('api/graph/stategraph/', this.parameters).pipe(
+            finalize(() => {
+                    snackBarRef.dismiss();
+                }
+            )).subscribe((res) => {
+                this.panelOpenState = false;
+                this.elements = GraphUtils.importNodeLinkData(res);
         });
     }
 
@@ -45,3 +55,4 @@ export class StateGraphComponent implements OnInit {
         this.cy.runLayout({name: layout.id});
     }
 }
+
