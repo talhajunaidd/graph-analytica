@@ -7,14 +7,13 @@ import {EdgeInputDialogComponent} from './edge-input-dialog/edge-input-dialog.co
 import {NodeLinkView} from '../../_models/NodeLinkView';
 import {Router} from '@angular/router';
 import {NgxCytoscapeComponent} from '../ngx-cytoscape/ngx-cytoscape.component';
-import IEdgeInput from './utils/IEdgeInput';
 import {GraphUtils} from '../../utils/graph.utils';
 import {AvailableCyLayouts, CyLayout} from './utils/available-cy-layouts';
 
 @Component({
     selector: 'app-graph-editor',
     templateUrl: './graph-editor.component.html',
-    styleUrls: ['./graph-editor.component.css'],
+    styleUrls: ['./graph-editor.component.scss']
 })
 export class GraphEditorComponent implements OnInit {
     @ViewChild(NgxCytoscapeComponent)
@@ -109,7 +108,7 @@ export class GraphEditorComponent implements OnInit {
             if (httpEvent.type === HttpEventType.UploadProgress) {
                 this.progress = Math.round(100 * httpEvent.loaded / httpEvent.total);
             } else if (httpEvent.type === HttpEventType.Response) {
-                this._graphService.importNodeLinkData(httpEvent.body);
+                this.elements = GraphUtils.importNodeLinkData(httpEvent.body);
             }
         });
     }

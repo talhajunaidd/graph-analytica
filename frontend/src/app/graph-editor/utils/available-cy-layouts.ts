@@ -11,9 +11,7 @@ const AvailableCyLayouts: CyLayout[] = [
     {id: 'concentric', name: 'Concentric'},
     {id: 'breadthfirst', name: 'Breadthfirst'},
     {id: 'cose', name: 'CoSE'},
-    {id: 'dagre', name: 'Dagre'},
-    {id: 'spread', name: 'Spread'},
-
-
+    /*{id: 'dagre', name: 'Dagre'},
+    {id: 'spread', name: 'Spread'},*/
 ];
 export {AvailableCyLayouts, CyLayout};

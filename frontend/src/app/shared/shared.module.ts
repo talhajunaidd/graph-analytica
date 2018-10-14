@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {MenuItems} from './menu-items/menu-items';
 import {AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective} from './accordion';
 import {RightClickTriggerDirective} from '../../_directives/right-click-trigger';
+import {ScrollbarModule} from 'ngx-scrollbar';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {RightClickTriggerDirective} from '../../_directives/right-click-trigger'
         AccordionAnchorDirective,
         AccordionLinkDirective,
         AccordionDirective,
-        RightClickTriggerDirective
+        RightClickTriggerDirective,
+        ScrollbarModule
     ],
     providers: [MenuItems]
 })

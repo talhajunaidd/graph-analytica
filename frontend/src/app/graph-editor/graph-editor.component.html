@@ -2,36 +2,51 @@
     <div fxFlex.gt-sm="100%" fxFlex="100">
         <mat-card>
             <mat-card-header>
-                <div fxFlex="row" fxLayoutAlign="space-between center">
-                    <mat-card-title fxFlexOrder="1">Editor</mat-card-title>
-                    <div fxFlexOrder="2">
-                        <a mat-button [matMenuTriggerFor]="importFormatMenu">Import</a>
-                        <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
-                        <button mat-button (click)="export()">Export</button>
+                <div fxFill>
+                    <div fxLayoutAlign="space-between center">
+                        <div fxFlexOrder="1" fxLayoutAlign="start center">
+                            <button mat-menu-item (click)="openAddNodeDialog()" matTooltip="Add Node">
+                                <mat-icon>fiber_manual_record</mat-icon>
+                            </button>
+                            <button mat-menu-item (click)="openAddEdgeDialog()" matTooltip="Add Edge">
+                                <mat-icon>call_made</mat-icon>
+                            </button>
+                        </div>
+                        <div fxFlexOrder="2" fxLayoutAlign="end center">
+                            <button mat-menu-item (click)="generate_state_graph()" matTooltip="State Graph">
+                                <mat-icon>linear_scale</mat-icon>
+                            </button>
+                            <app-cy-layout [layouts]="availableLayouts" menuName="Layouts"
+                                           (layoutChange)="setLayout($event)"></app-cy-layout>
+                            <button mat-menu-item matTooltip="Import/Export"
+                                    [matMenuTriggerFor]="import_export_menu">
+                                <mat-icon>import_export</mat-icon>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </mat-card-header>
-            <mat-card-content>
-                <app-ngx-cytoscape [elements]="elements" [layout]="layout"
-                                   [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
+            <div class="cytoscape-container">
+                <app-ngx-cytoscape [elements]="elements" [layout]="layout"></app-ngx-cytoscape>
+            </div>
 
-            </mat-card-content>
 
         </mat-card>
 
     </div>
 </div>
 
-<mat-menu #importFormatMenu>
-    <button mat-menu-item (click)="fileInput.click()">*.GraphML</button>
-    <button mat-menu-item disabled>*.dot</button>
-    <button mat-menu-item disabled>*.sif</button>
+<mat-menu #import_export_menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="import_submenu">Import</button>
+    <button mat-menu-item [matMenuTriggerFor]="export_submenu">Export</button>
 </mat-menu>
 
-<mat-menu #contextMenu id="contextMenu">
-    <button mat-menu-item (click)="openAddNodeDialog()">Add Node</button>
-    <button mat-menu-item (click)="openAddEdgeDialog()">Add Edge</button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="generate_state_graph()">State Graph</button>
-    <app-cy-layout [layouts]="availableLayouts" menuName="Layouts" (layoutChange)="setLayout($event)"></app-cy-layout>
+<mat-menu #import_submenu>
+    <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
+    <button mat-menu-item (click)="fileInput.click()">*.GraphML</button>
+</mat-menu>
+
+<mat-menu #export_submenu>
+    <button mat-button (click)="export()">*.GraphML</button>
 </mat-menu>

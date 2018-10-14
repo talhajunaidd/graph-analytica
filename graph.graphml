@@ -6,11 +6,35 @@
   <graph edgedefault="directed">
     <node id="x">
       <data key="d0">0</data>
-      <data key="d1">2</data>
+      <data key="d1">3</data>
     </node>
     <node id="y">
       <data key="d0">0</data>
       <data key="d1">1</data>
+    </node>
+    <node id="z">
+      <data key="d0">0</data>
+      <data key="d1">6</data>
+    </node>
+    <node id="p">
+      <data key="d0">0</data>
+      <data key="d1">3</data>
+    </node>
+    <node id="q">
+      <data key="d0">0</data>
+      <data key="d1">3</data>
+    </node>
+    <node id="d">
+      <data key="d0">0</data>
+      <data key="d1">3</data>
+    </node>
+    <node id="v">
+      <data key="d0">0</data>
+      <data key="d1">4</data>
+    </node>
+    <node id="er">
+      <data key="d0">0</data>
+      <data key="d1">3</data>
     </node>
     <edge source="x" target="x">
       <data key="d2">2</data>
@@ -18,8 +42,32 @@
     <edge source="x" target="y">
       <data key="d2">1</data>
     </edge>
+    <edge source="x" target="z">
+      <data key="d2">5</data>
+    </edge>
+    <edge source="x" target="er">
+      <data key="d2">-4</data>
+    </edge>
     <edge source="y" target="x">
       <data key="d2">-1</data>
+    </edge>
+    <edge source="y" target="z">
+      <data key="d2">6</data>
+    </edge>
+    <edge source="y" target="p">
+      <data key="d2">1</data>
+    </edge>
+    <edge source="z" target="x">
+      <data key="d2">5</data>
+    </edge>
+    <edge source="p" target="q">
+      <data key="d2">-5</data>
+    </edge>
+    <edge source="d" target="z">
+      <data key="d2">1</data>
+    </edge>
+    <edge source="v" target="d">
+      <data key="d2">-6</data>
     </edge>
   </graph>
 </graphml>

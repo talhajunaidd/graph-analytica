@@ -1,6 +1,5 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, ViewEncapsulation} from '@angular/core';
 import * as cytoscape from 'cytoscape';
-import * as dagre from 'cytoscape-dagre';
 import {GraphService} from '../../_services/graph.service';
 
 
@@ -9,7 +8,6 @@ import {GraphService} from '../../_services/graph.service';
     templateUrl: './ngx-cytoscape.component.html',
     styleUrls: ['./ngx-cytoscape.component.css'],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxCytoscapeComponent implements OnChanges {
 
@@ -31,7 +29,7 @@ export class NgxCytoscapeComponent implements OnChanges {
         };
 
         this._zoom = this._zoom || {
-            min: 0.0,
+            min: 0.1,
             max: 1.0
         };
 
@@ -148,5 +146,10 @@ export class NgxCytoscapeComponent implements OnChanges {
 
     runLayout(layout) {
         this.cy.layout(layout).run();
+    }
+
+    importElements(elements) {
+        this.elements = elements;
+        this.render();
     }
 }

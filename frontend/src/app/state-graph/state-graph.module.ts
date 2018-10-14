@@ -4,22 +4,24 @@ import {RouterModule} from '@angular/router';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
-    MatAccordionDisplayMode,
     MatAutocompleteModule,
     MatButtonModule,
-    MatButtonToggleModule,
     MatCardModule,
     MatDialogModule,
-    MatDividerModule, MatExpansionModule,
-    MatFormFieldModule, MatIconModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
     MatInputModule,
-    MatMenuModule, MatProgressSpinnerModule,
+    MatListModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatTreeModule
+    MatTooltipModule
 } from '@angular/material';
-
-import {RightClickTriggerDirective} from '../../_directives/right-click-trigger';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GraphService} from '../../_services/graph.service';
 import {NgxCytoscapeModule} from '../ngx-cytoscape/ngx-cytoscape.module';
@@ -33,8 +35,9 @@ import {StateGraphLoadingSnackComponent} from './state-graph-loading-snack.compo
     imports: [
         CommonModule, RouterModule.forChild(StateGraphRoutes), FlexLayoutModule, MatCardModule, MatTabsModule,
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
-        ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule,
-        MatSnackBarModule, MatExpansionModule, MatTreeModule, MatIconModule, CyLayoutModule, SharedModule, MatProgressSpinnerModule
+        ReactiveFormsModule, MatAutocompleteModule, MatDividerModule, NgxCytoscapeModule,
+        MatSnackBarModule, MatExpansionModule, MatIconModule, CyLayoutModule, SharedModule, MatProgressSpinnerModule,
+        MatTooltipModule, MatGridListModule, MatSelectModule, MatListModule
     ],
     entryComponents: [StateGraphLoadingSnackComponent],
     providers: [GraphService],

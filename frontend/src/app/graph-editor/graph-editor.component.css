@@ -1,8 +1,0 @@
-mat-card-header {
-    color: rgba(0, 0, 0, .54);
-    background: rgba(0, 0, 0, .03);
-}
-
-mat-card-content{
-    height: 100vh;
-}

@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CyLayoutComponent} from './cy-layout.component';
-import {MatMenuModule} from '@angular/material';
+import {MatIconModule, MatMenuModule, MatTooltipModule} from '@angular/material';
 
 @NgModule({
     imports: [
-        CommonModule, MatMenuModule
+        CommonModule, MatMenuModule, MatIconModule, MatTooltipModule
     ],
     declarations: [CyLayoutComponent],
     exports: [CyLayoutComponent]

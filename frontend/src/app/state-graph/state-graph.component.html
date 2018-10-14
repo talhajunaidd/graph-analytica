@@ -1,50 +1,88 @@
 <div fxLayout="row" fxLayoutWrap="wrap">
     <div fxFlex.gt-sm="100%" fxFlex="100">
         <mat-card>
+            <mat-expansion-panel #panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Parameters
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlex="30" fxFlexOrder="1">
+                        <ng-scrollbar class="scrollable" [autoHide]="false">
+                            <mat-selection-list dense (selectionChange)="onSelection($event)">
+                                <mat-list-option [ngClass]="{'selected-option': item.key == selectedParameter.key}"
+                                                 *ngFor="let item of parameters | keyvalue"
+                                                 [value]="item.key">
+                                    K({{item.key}})
+                                    <mat-divider></mat-divider>
+                                </mat-list-option>
+                            </mat-selection-list>
+                        </ng-scrollbar>
+                    </div>
+                    <div fxFlex="1" fxFlexOrder="2" class="parameter-seperater">
+                    </div>
+                    <div fxFlex="40" fxFlexOrder="3">
+                        <div class="no-parameter" fxLayoutAlign="center center" fxFill *ngIf="!selectedParameter.key">
+                            <label>No parameter selected</label>
+                        </div>
+                        <ng-scrollbar class="scrollable" *ngIf="selectedParameter.key">
+                            <mat-list dense fxLayout="column" class="parameter-values">
+                                <!--<label for="interactionValue">[{{inter.interaction}}]</label>-->
+                                <mat-list-item *ngFor="let inter of selectedParameter.value">
+                                    <mat-form-field>
+                                        <input matInput type="number"
+                                               placeholder="[{{inter.interaction}}]" [(ngModel)]="inter.value">
+                                    </mat-form-field>
+                                </mat-list-item>
+                            </mat-list>
+                        </ng-scrollbar>
+                    </div>
+                </div>
+                <mat-action-row>
+                    <button mat-button color="primary" (click)="generate_state_graph()">Generate
+                    </button>
+                </mat-action-row>
+            </mat-expansion-panel>
             <mat-card-header>
-                <div fxFlex="row" fxLayoutAlign="space-between center">
-                    <mat-card-title fxFlexOrder="1">State Graph</mat-card-title>
-                    <!--<div fxFlexOrder="2">-->
-                        <!--<button mat-button>Export</button>-->
-                    <!--</div>-->
+                <div fxFill>
+                    <div fxLayoutAlign="space-between center">
+                        <div fxFlexOrder="1">
+
+                        </div>
+                        <div fxFlexOrder="2" fxLayoutAlign="end center">
+                            <app-cy-layout [layouts]="availableLayouts" menuName="Layouts"
+                                           (layoutChange)="setLayout($event)"></app-cy-layout>
+                            <button mat-menu-item matTooltip="Import/Export"
+                                    [matMenuTriggerFor]="import_export_menu">
+                                <mat-icon>import_export</mat-icon>
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </mat-card-header>
-            <mat-card-content>
-                <mat-accordion>
-                    <mat-expansion-panel #panel [expanded]="panelOpenState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Parameters
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <mat-expansion-panel  class="interaction-input-form-field" *ngFor="let item of parameters  | keyvalue">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <label>Possible interactions for {{item.key}}</label>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div *ngFor="let inter of item.value">
-                                <!--<label for="interactionValue">[{{inter.interaction}}]</label>-->
-                                <mat-form-field>
-                                    <input id="interactionValue" matInput type="number" placeholder="[{{inter.interaction}}]" [(ngModel)]="inter.value">
-                                </mat-form-field>
-                            </div>
-                        </mat-expansion-panel>
-                        <mat-action-row>
-                            <button mat-button color="primary" (click)="generate_state_graph()">Generate</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-                    <div class="cytoscape-container">
-                        <app-ngx-cytoscape [layout]="layout" [elements]="elements" [rightClickTrigger]="contextMenu"></app-ngx-cytoscape>
-                    </div>
+            <div class="cytoscape-container">
 
-                </mat-accordion>
-            </mat-card-content>
+
+                <app-ngx-cytoscape [layout]="layout" [elements]="elements"></app-ngx-cytoscape>
+            </div>
         </mat-card>
     </div>
 </div>
 
-<mat-menu #contextMenu id="contextMenu">
-    <app-cy-layout [layouts]="availableLayouts" menuName="Layouts" (layoutChange)="setLayout($event)"></app-cy-layout>
+<mat-menu #import_export_menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="import_submenu">Import</button>
+    <button mat-menu-item [matMenuTriggerFor]="export_submenu">Export</button>
 </mat-menu>
 
+<mat-menu #import_submenu>
+    <button mat-menu-item>*.sif</button>
+    <button mat-menu-item>*.dot</button>
+</mat-menu>
+
+<mat-menu #export_submenu>
+    <button mat-menu-item>*.sif</button>
+    <button mat-menu-item>*.dot</button>
+</mat-menu>
