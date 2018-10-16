@@ -3,6 +3,7 @@ from wsgiref.util import FileWrapper
 
 from django.http import HttpResponse
 from networkx.readwrite import json_graph
+from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -87,6 +88,10 @@ class GraphView(APIView):
         data = json_graph.node_link_data(self.network_service.network)
         return Response(data)
 
+    def delete(self, request):
+        self.network_service.clear()
+        return Response(status=status.HTTP_200_OK)
+
 
 class StateGraphParametersView(APIView):
     def __init__(self, *args, **kwargs):
@@ -99,6 +104,23 @@ class StateGraphParametersView(APIView):
         return Response(parameters)
 
 
+class CyclesView(APIView):
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+        self.network_service = NetworkService()
+        self.network_analyser = NetworkAnalyser()
+
+    def get(self, request):
+        cycles = self.network_analyser.get_cycles()
+        return Response(cycles)
 
 
+class DeadlocksView(APIView):
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+        self.network_service = NetworkService()
+        self.network_analyser = NetworkAnalyser()
 
+    def get(self, request):
+        deadlocks = self.network_analyser.get_deadlock_states()
+        return Response(deadlocks)

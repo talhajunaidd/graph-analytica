@@ -18,6 +18,9 @@
                             </button>
                             <app-cy-layout [layouts]="availableLayouts" menuName="Layouts"
                                            (layoutChange)="setLayout($event)"></app-cy-layout>
+                            <button mat-menu-item matTooltip="Reset" (click)="openResetDialog()">
+                                <mat-icon>settings_backup_restore</mat-icon>
+                            </button>
                             <button mat-menu-item matTooltip="Import/Export"
                                     [matMenuTriggerFor]="import_export_menu">
                                 <mat-icon>import_export</mat-icon>

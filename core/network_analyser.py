@@ -3,7 +3,7 @@ import itertools
 from networkx import DiGraph, nx
 from networkx.classes.reportviews import NodeView
 
-from core import utils
+from core import utils, constants
 
 
 class NetworkAnalyser:
@@ -45,6 +45,7 @@ class NetworkAnalyser:
 
         edges = NetworkAnalyser.generate_edges(next_states)
         state_graph.add_edges_from(edges)
+        nx.write_gpickle(state_graph, constants.stategraph_pickle_key)
         return state_graph
 
     @staticmethod
@@ -87,6 +88,17 @@ class NetworkAnalyser:
                 first_interaction = next(matched_interaction)
                 entities[entity_key] = first_interaction['value']
         return resources
+
+    @staticmethod
+    def get_cycles():
+        network: nx.DiGraph = nx.read_gpickle(constants.stategraph_pickle_key)
+        return nx.simple_cycles(network)
+
+    @staticmethod
+    def get_deadlock_states():
+        network: nx.DiGraph = nx.read_gpickle(constants.stategraph_pickle_key)
+        out_degree_iter = network.out_degree(network.nodes)
+        return [node for node, out_degree in out_degree_iter if out_degree == 0]
 
     @staticmethod
     def calculate_resources(network, state_space):

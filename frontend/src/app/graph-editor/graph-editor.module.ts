@@ -5,9 +5,11 @@ import {GraphEditorRoutes} from './graph-editor.routing';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
     MatAutocompleteModule,
-    MatButtonModule, MatButtonToggleModule,
+    MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
-    MatDialogModule, MatDividerModule,
+    MatDialogModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -16,7 +18,6 @@ import {
     MatTabsModule,
     MatTooltipModule
 } from '@angular/material';
-import {RightClickTriggerDirective} from '../../_directives/right-click-trigger';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GraphService} from '../../_services/graph.service';
 import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
@@ -25,6 +26,7 @@ import {EdgeInputDialogComponent} from './edge-input-dialog/edge-input-dialog.co
 import {NgxCytoscapeModule} from '../ngx-cytoscape/ngx-cytoscape.module';
 import {CyLayoutModule} from '../cy-layout/cy-layout.module';
 import {SharedModule} from '../shared/shared.module';
+import {ResetDialogComponent} from './reset-dialog/reset-dialog.component';
 
 @NgModule({
     imports: [
@@ -34,8 +36,8 @@ import {SharedModule} from '../shared/shared.module';
         MatSnackBarModule, CyLayoutModule, SharedModule, MatIconModule, MatTooltipModule
     ],
     providers: [GraphService],
-    entryComponents: [NodeInputDialogComponent, EdgeInputDialogComponent],
-    declarations: [GraphEditorComponent, NodeInputDialogComponent, EdgeInputDialogComponent]
+    entryComponents: [NodeInputDialogComponent, EdgeInputDialogComponent, ResetDialogComponent],
+    declarations: [GraphEditorComponent, NodeInputDialogComponent, EdgeInputDialogComponent, ResetDialogComponent]
 })
 export class GraphEditorModule {
 }

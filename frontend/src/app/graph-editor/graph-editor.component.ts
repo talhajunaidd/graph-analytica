@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {NgxCytoscapeComponent} from '../ngx-cytoscape/ngx-cytoscape.component';
 import {GraphUtils} from '../../utils/graph.utils';
 import {AvailableCyLayouts, CyLayout} from './utils/available-cy-layouts';
+import {ResetDialogComponent} from './reset-dialog/reset-dialog.component';
 
 @Component({
     selector: 'app-graph-editor',
@@ -57,6 +58,18 @@ export class GraphEditorComponent implements OnInit {
             if (result) {
                 this._httpClient.post('api/node/', result).subscribe(z => {
                     this.cy.addElement(GraphUtils.buildNode(result));
+                });
+            }
+        });
+    }
+
+    openResetDialog(): void {
+        const dialogRef = this.dialog.open(ResetDialogComponent, {});
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result && result === true) {
+                this._httpClient.delete('api/graph/').subscribe(z => {
+                    this.elements = [];
                 });
             }
         });

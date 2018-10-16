@@ -8,5 +8,7 @@ urlpatterns = [
     url(r'^edge/$', views.EdgeView.as_view()),
     url(r'^graph/$', views.GraphView.as_view()),
     url(r'^graph/parameters/$', views.StateGraphParametersView.as_view()),
-    url(r'^graph/stategraph/$', views.StateGraphView.as_view())
+    url(r'^graph/stategraph/$', views.StateGraphView.as_view()),
+    url(r'^graph/stategraph/cycles/$', views.CyclesView.as_view()),
+    url(r'^graph/stategraph/deadlocks/$', views.DeadlocksView.as_view())
 ]

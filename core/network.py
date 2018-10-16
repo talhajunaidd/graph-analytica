@@ -1,10 +1,13 @@
 import networkx as nx
 from networkx.readwrite import json_graph
 
+from core import utils
 from core.constants import pickle_key, graphml_file_name
 
 
 class NetworkService:
+    network: nx.DiGraph
+
     def __init__(self) -> None:
         try:
             self.network = nx.read_gpickle(pickle_key)
@@ -42,4 +45,4 @@ class NetworkService:
         return file.name
 
     def persist_network(self):
-        nx.write_gpickle(self.network, pickle_key)
+        utils.persist_network(self.network, pickle_key)

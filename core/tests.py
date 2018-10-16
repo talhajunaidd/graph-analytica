@@ -66,5 +66,12 @@ class NetworkTestCase(TestCase):
         expected = ((0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1))
         self.assertListEqual(result, expected)
 
+    def test_cycles(self):
+        network = self.network_service.network
+        NetworkAnalyser.get_cycles()
+
+    def test_out_degree(self):
+        NetworkAnalyser.get_deadlock_states()
+
     def tearDown(self):
         self.network_service.clear()

@@ -20,6 +20,7 @@ export class StateGraphComponent implements OnInit {
     availableLayouts: CyLayout[] = AvailableCyLayouts;
     parameters: any;
     elements: any;
+    cycles: string[][];
     @ViewChild(NgxCytoscapeComponent)
     cy: NgxCytoscapeComponent;
     layout = {
@@ -69,6 +70,33 @@ export class StateGraphComponent implements OnInit {
     onSelection(e: MatSelectionListChange) {
         const selectedParameterKey = e.option.value;
         this.selectedParameter = {'key': selectedParameterKey, 'value': this.parameters[selectedParameterKey]};
+    }
+
+    load_cycles() {
+        this.httpClient.get<string[][]>('api/graph/stategraph/cycles/').subscribe((res) => {
+            this.cycles = res;
+        });
+    }
+
+    selectCycle(cycle: string[]): void {
+        const cyclicNodes = this.cy.cy.nodes().filter(ele => {
+            return cycle.indexOf(ele.data('id')) !== -1;
+        });
+        cyclicNodes.style('background-color', '#1976D2');
+    }
+
+    resetCycles(): void {
+        this.cy.cy.nodes().removeStyle();
+    }
+
+    setDeadlocks(): void {
+        this.httpClient.get<string[]>('api/graph/stategraph/deadlocks/').subscribe((res) => {
+            const deadlockStates = this.cy.cy.nodes().filter(ele => {
+                return res.indexOf(ele.data('id')) !== -1;
+            });
+            deadlockStates.style('background-color', '#FF5252');
+        });
+
     }
 }
 

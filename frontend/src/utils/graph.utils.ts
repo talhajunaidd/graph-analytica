@@ -8,8 +8,13 @@ export class GraphUtils {
                 id: node.id,
                 min: node.min,
                 max: node.max
-            }
+            },
+            position: {x: this.getRandomNumber(10, 100), y: this.getRandomNumber(10, 100)}
         };
+    }
+
+    static getRandomNumber(start: number, end: number): number {
+        return Math.floor(Math.random() * end) + start;
     }
 
     static transformEdgeData(result: IEdgeInput) {

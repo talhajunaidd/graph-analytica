@@ -4,70 +4,46 @@
   <key attr.name="max" attr.type="long" for="node" id="d1" />
   <key attr.name="min" attr.type="long" for="node" id="d0" />
   <graph edgedefault="directed">
-    <node id="x">
-      <data key="d0">0</data>
-      <data key="d1">3</data>
-    </node>
-    <node id="y">
+    <node id="BTK">
       <data key="d0">0</data>
       <data key="d1">1</data>
     </node>
-    <node id="z">
+    <node id="MAL">
       <data key="d0">0</data>
-      <data key="d1">6</data>
+      <data key="d1">1</data>
     </node>
-    <node id="p">
+    <node id="SOCS">
       <data key="d0">0</data>
-      <data key="d1">3</data>
+      <data key="d1">1</data>
     </node>
-    <node id="q">
+    <node id="NFKB">
       <data key="d0">0</data>
-      <data key="d1">3</data>
+      <data key="d1">1</data>
     </node>
-    <node id="d">
+    <node id="INCY">
       <data key="d0">0</data>
-      <data key="d1">3</data>
+      <data key="d1">2</data>
     </node>
-    <node id="v">
-      <data key="d0">0</data>
-      <data key="d1">4</data>
-    </node>
-    <node id="er">
-      <data key="d0">0</data>
-      <data key="d1">3</data>
-    </node>
-    <edge source="x" target="x">
-      <data key="d2">2</data>
-    </edge>
-    <edge source="x" target="y">
+    <edge source="BTK" target="MAL">
       <data key="d2">1</data>
     </edge>
-    <edge source="x" target="z">
-      <data key="d2">5</data>
+    <edge source="MAL" target="NFKB">
+      <data key="d2">1</data>
     </edge>
-    <edge source="x" target="er">
-      <data key="d2">-4</data>
-    </edge>
-    <edge source="y" target="x">
+    <edge source="SOCS" target="MAL">
       <data key="d2">-1</data>
     </edge>
-    <edge source="y" target="z">
-      <data key="d2">6</data>
+    <edge source="SOCS" target="NFKB">
+      <data key="d2">-1</data>
     </edge>
-    <edge source="y" target="p">
+    <edge source="NFKB" target="INCY">
       <data key="d2">1</data>
     </edge>
-    <edge source="z" target="x">
-      <data key="d2">5</data>
+    <edge source="INCY" target="NFKB">
+      <data key="d2">2</data>
     </edge>
-    <edge source="p" target="q">
-      <data key="d2">-5</data>
-    </edge>
-    <edge source="d" target="z">
+    <edge source="INCY" target="SOCS">
       <data key="d2">1</data>
-    </edge>
-    <edge source="v" target="d">
-      <data key="d2">-6</data>
     </edge>
   </graph>
 </graphml>

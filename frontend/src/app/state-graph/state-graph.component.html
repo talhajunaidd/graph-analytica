@@ -52,6 +52,10 @@
 
                         </div>
                         <div fxFlexOrder="2" fxLayoutAlign="end center">
+                            <button mat-button (click)="load_cycles()" [matMenuTriggerFor]="cyclesMenu"
+                                    matTooltip="Properties">
+                                <mat-icon>repeat</mat-icon>
+                            </button>
                             <app-cy-layout [layouts]="availableLayouts" menuName="Layouts"
                                            (layoutChange)="setLayout($event)"></app-cy-layout>
                             <button mat-menu-item matTooltip="Import/Export"
@@ -64,8 +68,6 @@
                 </div>
             </mat-card-header>
             <div class="cytoscape-container">
-
-
                 <app-ngx-cytoscape [layout]="layout" [elements]="elements"></app-ngx-cytoscape>
             </div>
         </mat-card>
@@ -85,4 +87,14 @@
 <mat-menu #export_submenu>
     <button mat-menu-item>*.sif</button>
     <button mat-menu-item>*.dot</button>
+</mat-menu>
+
+<mat-menu #cyclesMenu="matMenu">
+    <ng-container *ngFor="let cycle of cycles; let i = index">
+        <button mat-menu-item (click)="selectCycle(cycle)">{{ i + 1 }}</button>
+    </ng-container>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="setDeadlocks()">Deadlocks</button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="resetCycles()">Reset</button>
 </mat-menu>
