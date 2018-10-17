@@ -1,26 +1,34 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
 import {GraphService} from '../../_services/graph.service';
 import {HttpClient} from '@angular/common/http';
 import {NgxCytoscapeComponent} from '../ngx-cytoscape/ngx-cytoscape.component';
 import {GraphUtils} from '../../utils/graph.utils';
 import {AvailableCyLayouts, CyLayout} from '../graph-editor/utils/available-cy-layouts';
-import {MatListOption, MatSelectionList, MatSelectionListChange, MatSnackBar} from '@angular/material';
+import {MatListOption, MatSelectionList, MatSelectionListChange, MatSliderChange, MatSnackBar} from '@angular/material';
 import {StateGraphLoadingSnackComponent} from './state-graph-loading-snack.component';
 import {finalize} from 'rxjs/operators';
 import {SelectionModel} from '@angular/cdk/collections';
+import {MagnifierModel} from './magnifier.model';
+
 
 @Component({
     selector: 'app-state-graph',
     templateUrl: './state-graph.component.html',
     styleUrls: ['./state-graph.component.scss'],
 })
-export class StateGraphComponent implements OnInit {
+export class StateGraphComponent implements OnInit, AfterViewChecked {
     @ViewChild(MatSelectionList) selectionList: MatSelectionList;
     panelOpenState = true;
     availableLayouts: CyLayout[] = AvailableCyLayouts;
     parameters: any;
     elements: any;
     cycles: string[][];
+    magnifierConfig: MagnifierModel = {
+        min: 0,
+        max: 0,
+        step: 0.05,
+        value: 1
+    };
     @ViewChild(NgxCytoscapeComponent)
     cy: NgxCytoscapeComponent;
     layout = {
@@ -37,8 +45,9 @@ export class StateGraphComponent implements OnInit {
     };
 
 
-    constructor(private graphService: GraphService, private httpClient: HttpClient, public snackBar: MatSnackBar) {
-
+    constructor(private graphService: GraphService,
+                private httpClient: HttpClient,
+                public snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -47,7 +56,6 @@ export class StateGraphComponent implements OnInit {
         });
 
         this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
-
     }
 
     generate_state_graph() {
@@ -97,6 +105,19 @@ export class StateGraphComponent implements OnInit {
             deadlockStates.style('background-color', '#FF5252');
         });
 
+    }
+
+    onZoomLevelChange(event: MatSliderChange): void {
+        this.cy.cy.zoom(event.value);
+    }
+
+    ngAfterViewChecked(): void {
+        this.magnifierConfig = {
+            min: this.cy.cy.minZoom(),
+            max: this.cy.cy.maxZoom(),
+            step: 0.05,
+            value: this.cy.cy.zoom()
+        };
     }
 }
 

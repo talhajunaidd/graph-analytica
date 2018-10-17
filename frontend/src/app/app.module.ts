@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './shared/shared.module';
 import {SpinnerComponent} from './shared/spinner.component';
 import {AppMaterialModule} from './app-material.module';
+import {GestureConfig} from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import {AppMaterialModule} from './app-material.module';
         {
             provide: LocationStrategy,
             useClass: HashLocationStrategy
-        }
+        },
+        {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
     ],
     bootstrap: [AppComponent]
 })

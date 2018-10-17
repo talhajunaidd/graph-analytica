@@ -17,7 +17,7 @@ import {
     MatListModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatSelectModule,
+    MatSelectModule, MatSliderModule,
     MatSnackBarModule,
     MatTabsModule,
     MatTooltipModule
@@ -37,7 +37,7 @@ import {StateGraphLoadingSnackComponent} from './state-graph-loading-snack.compo
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
         ReactiveFormsModule, MatAutocompleteModule, MatDividerModule, NgxCytoscapeModule,
         MatSnackBarModule, MatExpansionModule, MatIconModule, CyLayoutModule, SharedModule, MatProgressSpinnerModule,
-        MatTooltipModule, MatGridListModule, MatSelectModule, MatListModule
+        MatTooltipModule, MatGridListModule, MatSelectModule, MatListModule, MatSliderModule
     ],
     entryComponents: [StateGraphLoadingSnackComponent],
     providers: [GraphService],

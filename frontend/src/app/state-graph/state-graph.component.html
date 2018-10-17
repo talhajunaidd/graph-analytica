@@ -11,7 +11,7 @@
                 <div fxLayout="row" fxLayoutAlign="start start">
                     <div fxFlex="30" fxFlexOrder="1">
                         <ng-scrollbar class="scrollable" [autoHide]="false">
-                            <mat-selection-list dense (selectionChange)="onSelection($event)">
+                            <mat-selection-list (selectionChange)="onSelection($event)">
                                 <mat-list-option [ngClass]="{'selected-option': item.key == selectedParameter.key}"
                                                  *ngFor="let item of parameters | keyvalue"
                                                  [value]="item.key">
@@ -28,8 +28,7 @@
                             <label>No parameter selected</label>
                         </div>
                         <ng-scrollbar class="scrollable" *ngIf="selectedParameter.key">
-                            <mat-list dense fxLayout="column" class="parameter-values">
-                                <!--<label for="interactionValue">[{{inter.interaction}}]</label>-->
+                            <mat-list fxLayout="column" class="parameter-values">
                                 <mat-list-item *ngFor="let inter of selectedParameter.value">
                                     <mat-form-field>
                                         <input matInput type="number"
@@ -52,10 +51,15 @@
 
                         </div>
                         <div fxFlexOrder="2" fxLayoutAlign="end center">
-                            <button mat-button (click)="load_cycles()" [matMenuTriggerFor]="cyclesMenu"
+                            <button mat-menu-item (click)="load_cycles()" [matMenuTriggerFor]="cyclesMenu"
                                     matTooltip="Properties">
                                 <mat-icon>repeat</mat-icon>
                             </button>
+                            <mat-slider matTooltip="Magnify" [thumbLabel]="true" (input)="onZoomLevelChange($event)"
+                                        [min]="magnifierConfig.min"
+                                        [max]='magnifierConfig.max' [step]="magnifierConfig.step"
+                                        [value]="magnifierConfig.value">
+                            </mat-slider>
                             <app-cy-layout [layouts]="availableLayouts" menuName="Layouts"
                                            (layoutChange)="setLayout($event)"></app-cy-layout>
                             <button mat-menu-item matTooltip="Import/Export"
@@ -90,11 +94,20 @@
 </mat-menu>
 
 <mat-menu #cyclesMenu="matMenu">
+    <label mat-menu-item class="menu-item-label">Cycles</label>
     <ng-container *ngFor="let cycle of cycles; let i = index">
         <button mat-menu-item (click)="selectCycle(cycle)">{{ i + 1 }}</button>
+
     </ng-container>
+    <button mat-menu-item [disabled]="true" *ngIf="cycles && cycles.length == 0">No cycles</button>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="setDeadlocks()">Deadlocks</button>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="resetCycles()">Reset</button>
+</mat-menu>
+
+<mat-menu #zoomMenu="matMenu" (click)="$event.stopPropagation()">
+    <ng-container>
+
+    </ng-container>
 </mat-menu>
