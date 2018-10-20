@@ -30,6 +30,7 @@ export class NgxCytoscapeComponent implements OnChanges {
 
         this._zoom = this._zoom || {
             min: 0.1,
+            level: 1.0,
             max: 3.0
         };
 
@@ -66,8 +67,10 @@ export class NgxCytoscapeComponent implements OnChanges {
                 container: this.el.nativeElement,
                 minZoom: this.zoom.min,
                 maxZoom: this.zoom.max,
+                zoom: this.zoom.level,
                 style: this.style,
-                elements: this.elements
+                elements: this.elements,
+                wheelSensitivity: 0.05
             });
             this._graphService.registerCy(this._cy);
             this.cy.delayAnimation(1000);
@@ -76,6 +79,7 @@ export class NgxCytoscapeComponent implements OnChanges {
             this.cy.elements().remove();
             this.cy.add(this.elements);
             this.cy.minZoom(this.zoom.min);
+
             this.cy.maxZoom(this.zoom.max);
             this.cy.delayAnimation(1000);
         }
