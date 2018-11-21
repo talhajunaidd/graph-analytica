@@ -1,5 +1,9 @@
+from operator import eq
+
+import networkx as nx
 from django.test import TestCase
 
+from core.cytoscape import read_sif, write_sif
 from core.models import Node, Edge
 from core.network import NetworkService
 from core.network_analyser import NetworkAnalyser
@@ -72,6 +76,13 @@ class NetworkTestCase(TestCase):
 
     def test_out_degree(self):
         NetworkAnalyser.get_deadlock_states()
+
+    def test_sif_converter(self):
+        write_sif(self.network_service.network, 'test.sif')
+        G = read_sif("test.sif")
+        em = nx.algorithms.isomorphism.generic_edge_match('weight', 1, lambda x, y: eq(str(x), str(y)))
+        result = nx.is_isomorphic(self.network_service.network, G, edge_match=em)
+        self.assertTrue(result)
 
     def tearDown(self):
         self.network_service.clear()
