@@ -1,4 +1,4 @@
-# Create your views here.
+import os
 from wsgiref.util import FileWrapper
 
 from django.http import HttpResponse
@@ -21,15 +21,32 @@ class FileView(APIView):
         self.network = NetworkService()
 
     def post(self, request, *args, **kwargs):
-        file = request.data['file'].file
-        data = self.network.import_graphml(file)
+        file = request.data['file']
+        filename, file_extension = os.path.splitext(file.name)
+        data = None
+        if file_extension == '.dot':
+            data = self.network.import_dot(file.file)
+
+        if file_extension == '.graphml':
+            data = self.network.import_graphml(file.file)
+
+        if file_extension == '.sif':
+            data = self.network.import_sif(file.file)
+
         return Response(data)
 
     def get(self, request):
-        file_name = self.network.export_graphml()
+        type = request.GET.get('type', None)
+        file_name = None
+        if type == 'dot':
+            file_name = self.network.export_dot()
+        if type == 'graphml':
+            file_name = self.network.export_graphml()
+        if type == 'sif':
+            file_name = self.network.export_sif()
         f = open(file_name)
-        response = HttpResponse(FileWrapper(f), content_type='application/graphml')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % 'network.graphml'
+        response = HttpResponse(FileWrapper(f), content_type="application/{0}".format(type))
+        response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)
         return response
 
 

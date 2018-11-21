@@ -14,6 +14,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatSliderModule,
     MatSnackBarModule,
     MatTabsModule,
     MatTooltipModule
@@ -33,7 +34,7 @@ import {ResetDialogComponent} from './reset-dialog/reset-dialog.component';
         CommonModule, RouterModule.forChild(GraphEditorRoutes), FlexLayoutModule, MatCardModule, MatTabsModule,
         MatMenuModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatSnackBarModule, MatButtonModule,
         ReactiveFormsModule, MatAutocompleteModule, MatButtonToggleModule, MatDividerModule, NgxCytoscapeModule,
-        MatSnackBarModule, CyLayoutModule, SharedModule, MatIconModule, MatTooltipModule
+        MatSnackBarModule, CyLayoutModule, SharedModule, MatIconModule, MatTooltipModule, MatSliderModule
     ],
     providers: [GraphService],
     entryComponents: [NodeInputDialogComponent, EdgeInputDialogComponent, ResetDialogComponent],

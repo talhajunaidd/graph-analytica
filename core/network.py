@@ -2,7 +2,8 @@ import networkx as nx
 from networkx.readwrite import json_graph
 
 from core import utils
-from core.constants import pickle_key, graphml_file_name
+from core.constants import pickle_key, graphml_file_name, dot_file_name, sif_file_name
+from core.cytoscape import read_sif, write_sif
 
 
 class NetworkService:
@@ -38,9 +39,31 @@ class NetworkService:
         self.persist_network()
         return json_graph.node_link_data(self.network)
 
+    def import_dot(self, file):
+        self.network = nx.drawing.nx_pydot.read_dot(file)
+        self.persist_network()
+        return json_graph.node_link_data(self.network)
+
+    def import_sif(self, file):
+        self.network = read_sif(file)
+        self.persist_network()
+        return json_graph.node_link_data(self.network)
+
     def export_graphml(self):
         file = open(graphml_file_name, "wb")
         nx.write_graphml(self.network, file, prettyprint=True)
+        file.close()
+        return file.name
+
+    def export_dot(self):
+        file = open(dot_file_name, "w")
+        nx.drawing.nx_pydot.write_dot(self.network, file)
+        file.close()
+        return file.name
+
+    def export_sif(self):
+        file = open(sif_file_name, "w")
+        write_sif(self.network, file)
         file.close()
         return file.name
 
