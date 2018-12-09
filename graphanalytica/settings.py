@@ -12,7 +12,7 @@ SECRET_KEY = '@d+wc!%1koug*f!oj)alo0nk1j#ze&41d(i5l!!jq2i_3a135e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '18.211.70.234', 'graphanalytica.tk', 'www.graphanalytica.tk']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'rest_framework',
     'graphanalytica.api'
@@ -28,12 +29,14 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'spa.middleware.SPAMiddleware',
 ]
 
 ROOT_URLCONF = 'graphanalytica.urls'
@@ -98,12 +101,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATICFILES_STORAGE = 'spa.storage.SPAStaticFilesStorage'
+
 STATIC_URL = '/static/'
 
-ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'dist')
-#
-STATICFILES_DIRS = [
-    os.path.join(ANGULAR_APP_DIR),
-]
-# Extra places for collectstatic to find static files.
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "frontend/dist"),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

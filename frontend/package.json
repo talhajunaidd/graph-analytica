@@ -3,12 +3,10 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --proxy-config proxy.config.json --live-reload=false",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "build-prod": "ng build --prod --no-progress",
         "test-prod": "ng test --browsers ChromeHeadless --no-progress --code-coverage --source-map=false"
     },
     "private": true,
@@ -32,7 +30,6 @@
         "d3": "^3.5.17",
         "hammerjs": "^2.0.8",
         "jquery": "^3.3.1",
-        "jsnetworkx": "^0.3.4",
         "material-design-icons": "^3.0.1",
         "ngx-scrollbar": "^2.2.0",
         "rxjs": "^6.3.3",
