@@ -13,6 +13,11 @@
                             </button>
                         </div>
                         <div fxFlexOrder="2" fxLayoutAlign="end center">
+                            <mat-slider matTooltip="Magnify" [thumbLabel]="true" (input)="onZoomLevelChange($event)"
+                                        [min]="magnifierConfig.min"
+                                        [max]='magnifierConfig.max' [step]="magnifierConfig.step"
+                                        [value]="magnifierConfig.value">
+                            </mat-slider>
                             <button mat-menu-item (click)="generate_state_graph()" matTooltip="State Graph">
                                 <mat-icon>linear_scale</mat-icon>
                             </button>
@@ -41,15 +46,14 @@
 </div>
 
 <mat-menu #import_export_menu="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="import_submenu">Import</button>
+    <input hidden type="file" accept=".graphml, .sif" #fileInput (change)="upload($event)">
+    <button mat-menu-item (click)="fileInput.click()">Import</button>
     <button mat-menu-item [matMenuTriggerFor]="export_submenu">Export</button>
 </mat-menu>
 
-<mat-menu #import_submenu>
-    <input hidden type="file" accept=".graphml" #fileInput (change)="upload($event)">
-    <button mat-menu-item (click)="fileInput.click()">*.GraphML</button>
-</mat-menu>
 
 <mat-menu #export_submenu>
-    <button mat-button (click)="export()">*.GraphML</button>
+    <button mat-menu-item (click)="export('graphml')">*.GraphML</button>
+    <button mat-menu-item (click)="export('dot')">*.dot</button>
+    <button mat-menu-item (click)="export('sif')">*.sif</button>
 </mat-menu>
