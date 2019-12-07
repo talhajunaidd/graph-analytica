@@ -17,11 +17,11 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'rest_framework',
     'graphanalytica.api'
@@ -33,11 +33,19 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'spa.middleware.SPAMiddleware',
+    # 'graphanalytica.auto_cookie_middleware.AutoCookieMiddleware'
 ]
+
+# AUTHENTICATION_BACKENDS = ['graphanalytica.api.authentication_backend.AuthenticationBackendAnonymous']
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     )
+# }
 
 ROOT_URLCONF = 'graphanalytica.urls'
 
@@ -101,13 +109,19 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATICFILES_STORAGE = 'spa.storage.SPAStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 STATIC_URL = '/static/'
+FRONTEND_DIST = 'dist'
+PROD_STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, FRONTEND_DIST),
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "frontend/dist"),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, PROD_STATIC_ROOT)
+
+WHITENOISE_ROOT = FRONTEND_DIST if DEBUG else PROD_STATIC_ROOT
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_INDEX_FILE = True

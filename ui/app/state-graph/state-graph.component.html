@@ -1,0 +1,113 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex.gt-sm="100%" fxFlex="100">
+        <mat-card>
+            <mat-expansion-panel #panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Parameters
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlex="30" fxFlexOrder="1">
+                        <ng-scrollbar class="scrollable">
+                            <mat-selection-list (selectionChange)="onSelection($event)">
+                                <mat-list-option [ngClass]="{'selected-option': item.key == selectedParameter.key}"
+                                                 *ngFor="let item of parameters | keyvalue"
+                                                 [value]="item.key">
+                                    K({{item.key}})
+                                    <mat-divider></mat-divider>
+                                </mat-list-option>
+                            </mat-selection-list>
+                        </ng-scrollbar>
+                    </div>
+                    <div fxFlex="1" fxFlexOrder="2" class="parameter-seperater">
+                    </div>
+                    <div fxFlex="40" fxFlexOrder="3">
+                        <div class="no-parameter" fxLayoutAlign="center center" fxFill *ngIf="!selectedParameter.key">
+                            <label>No parameter selected</label>
+                        </div>
+                        <ng-scrollbar class="scrollable" *ngIf="selectedParameter.key">
+                            <mat-list fxLayout="column" class="parameter-values">
+                                <mat-list-item *ngFor="let inter of selectedParameter.value">
+                                    <mat-form-field>
+                                        <input matInput type="number"
+                                               placeholder="[{{inter[0]}}]" [(ngModel)]="inter[1]">
+                                    </mat-form-field>
+                                </mat-list-item>
+                            </mat-list>
+                        </ng-scrollbar>
+                    </div>
+                </div>
+                <mat-action-row>
+                    <button mat-button color="primary" (click)="generate_state_graph()">Generate
+                    </button>
+                </mat-action-row>
+            </mat-expansion-panel>
+            <mat-card-header>
+                <div fxFill>
+                    <div fxLayoutAlign="space-between center">
+                        <div fxFlexOrder="1">
+
+                        </div>
+                        <div fxFlexOrder="2" fxLayoutAlign="end center">
+                            <button mat-menu-item (click)="load_cycles()" [matMenuTriggerFor]="cyclesMenu"
+                                    matTooltip="Properties">
+                                <mat-icon>repeat</mat-icon>
+                            </button>
+                            <mat-slider matTooltip="Magnify" [thumbLabel]="true" (input)="onZoomLevelChange($event)"
+                                        [min]="magnifierConfig.min"
+                                        [max]='magnifierConfig.max' [step]="magnifierConfig.step"
+                                        [value]="magnifierConfig.value">
+                            </mat-slider>
+                            <app-cy-layout [layouts]="availableLayouts" menuName="Layouts"
+                                           (layoutChange)="setLayout($event)"></app-cy-layout>
+                            <button mat-menu-item matTooltip="Import/Export"
+                                    [matMenuTriggerFor]="import_export_menu">
+                                <mat-icon>import_export</mat-icon>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-card-header>
+            <div class="cytoscape-container">
+                <app-ngx-cytoscape [layout]="layout" [elements]="elements"></app-ngx-cytoscape>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<mat-menu #import_export_menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="import_submenu">Import</button>
+    <button mat-menu-item [matMenuTriggerFor]="export_submenu">Export</button>
+</mat-menu>
+
+<mat-menu #import_submenu>
+    <button mat-menu-item>*.sif</button>
+    <button mat-menu-item>*.dot</button>
+</mat-menu>
+
+<mat-menu #export_submenu>
+    <button mat-menu-item>*.sif</button>
+    <button mat-menu-item>*.dot</button>
+</mat-menu>
+
+<mat-menu #cyclesMenu="matMenu">
+    <label mat-menu-item class="menu-item-label">Cycles</label>
+    <ng-container *ngFor="let cycle of cycles; let i = index">
+        <button mat-menu-item (click)="selectCycle(cycle)">{{ i + 1 }}</button>
+
+    </ng-container>
+    <button mat-menu-item [disabled]="true" *ngIf="cycles && cycles.length == 0">No cycles</button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="setDeadlocks()">Deadlocks</button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="resetCycles()">Reset</button>
+</mat-menu>
+
+<mat-menu #zoomMenu="matMenu" (click)="$event.stopPropagation()">
+    <ng-container>
+
+    </ng-container>
+</mat-menu>

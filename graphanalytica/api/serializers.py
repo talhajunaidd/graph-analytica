@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Node, Edge
+from pyrthomas.models import Node, Edge
 
 
 class NodeSerializer(serializers.Serializer):

@@ -1,0 +1,132 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "GraphAnalytica": {
+            "root": "",
+            "sourceRoot": "ui",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist",
+                        "index": "ui/index.html",
+                        "main": "ui/main.ts",
+                        "polyfills": "ui/polyfills.ts",
+                        "tsConfig": "ui/tsconfig.app.json",
+                        "assets": [
+                            "ui/assets",
+                            "ui/favicon.ico"
+                        ],
+                        "styles": [
+                            "ui/styles.scss",
+                            "ui/assets/styles/style.scss"
+                        ],
+                        "scripts": [
+                            "node_modules/jquery/dist/jquery.min.js"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "ui/environments/environment.ts",
+                                    "with": "ui/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "GraphAnalytica:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "GraphAnalytica:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "GraphAnalytica:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "ui/test.ts",
+                        "polyfills": "ui/polyfills.ts",
+                        "tsConfig": "ui/tsconfig.spec.json",
+                        "karmaConfig": "ui/karma.conf.js",
+                        "styles": [
+                            "ui/styles.css",
+                            "ui/assets/styles/style.scss"
+                        ],
+                        "assets": [
+                            "ui/assets",
+                            "ui/favicon.ico"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "ui/tsconfig.app.json",
+                            "ui/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "GraphAnalytica-e2e": {
+            "root": "e2e/",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "GraphAnalytica:serve"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "GraphAnalytica",
+    "schematics": {
+        "@schematics/angular:component": {
+            "prefix": "app",
+            "styleext": "scss"
+        },
+        "@schematics/angular:directive": {
+            "prefix": "app"
+        }
+    }
+}

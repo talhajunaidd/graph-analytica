@@ -1,0 +1,24 @@
+mat-card-header {
+    color: rgba(0, 0, 0, .54);
+    background: rgba(0, 0, 0, .03);
+}
+
+.cytoscape-container {
+    height: calc(100vh - 8rem);
+}
+
+mat-card {
+    margin: 10px;
+
+    mat-card-header {
+        ::ng-deep .mat-card-header-text {
+            display: none;
+        }
+
+        padding: 0;
+    }
+
+    mat-icon {
+        margin-right: 0;
+    }
+}

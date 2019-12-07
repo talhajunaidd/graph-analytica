@@ -1,0 +1,61 @@
+@import "../../assets/styles/variable";
+
+.interaction-label {
+    padding-right: 1em;
+}
+
+mat-card-header {
+    color: rgba(0, 0, 0, .54);
+    background: rgba(0, 0, 0, .03);
+}
+
+.cytoscape-container {
+    height: 100vh;
+}
+
+.interaction-input-form-field {
+    width: 50%;
+}
+
+::ng-deep .mat-pseudo-checkbox {
+    display: none !important;
+}
+
+.scrollable {
+    overflow-y: auto;
+    height: 250px
+}
+
+.selected-option {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+mat-card {
+    mat-card-header {
+        ::ng-deep .mat-card-header-text {
+            display: none;
+        }
+        padding: 0;
+        margin-top: 16px;
+    }
+    mat-icon {
+        margin-right: 0;
+    }
+}
+
+.parameter-seperater {
+    height: 250px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-top-width: 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.no-parameter {
+    padding-top: 2rem;
+    font-weight: 600;
+}
+
+.menu-item-label {
+    font-weight: 600 !important;
+}

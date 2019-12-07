@@ -8,8 +8,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.network import NetworkService
-from core.network_analyser import NetworkAnalyser
+from pyrthomas.network import NetworkService
+from pyrthomas.network_analyser import NetworkAnalyser
 from graphanalytica.api.serializers import NodeSerializer, EdgeSerializer
 
 
