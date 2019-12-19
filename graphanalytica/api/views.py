@@ -8,9 +8,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from graphanalytica.api.serializers import NodeSerializer, EdgeSerializer
 from pyrthomas.network import NetworkService
 from pyrthomas.network_analyser import NetworkAnalyser
-from graphanalytica.api.serializers import NodeSerializer, EdgeSerializer
 
 
 class FileView(APIView):
@@ -128,7 +128,7 @@ class CyclesView(APIView):
         self.network_analyser = NetworkAnalyser()
 
     def get(self, request):
-        cycles = self.network_analyser.get_cycles()
+        cycles = self.network_analyser.get_cycles(self.network_service.network)
         return Response(cycles)
 
 
@@ -139,5 +139,5 @@ class DeadlocksView(APIView):
         self.network_analyser = NetworkAnalyser()
 
     def get(self, request):
-        deadlocks = self.network_analyser.get_deadlock_states()
+        deadlocks = self.network_analyser.get_deadlock_states(self.network_service.network)
         return Response(deadlocks)
