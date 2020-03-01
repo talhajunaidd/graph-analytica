@@ -17,10 +17,10 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'graphanalytica.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'whitenoise.runserver_nostatic',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
@@ -36,7 +36,7 @@ MIDDLEWARE = [
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'graphanalytica.auto_cookie_middleware.AutoCookieMiddleware'
+    'graphanalytica.auto_cookie_middleware.AutoCookieMiddleware'
 ]
 
 # AUTHENTICATION_BACKENDS = ['graphanalytica.api.authentication_backend.AuthenticationBackendAnonymous']
