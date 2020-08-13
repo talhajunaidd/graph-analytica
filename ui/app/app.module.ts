@@ -17,7 +17,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './shared/shared.module';
 import {SpinnerComponent} from './shared/spinner.component';
 import {AppMaterialModule} from './app-material.module';
-import { GestureConfig } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -42,7 +41,6 @@ import { GestureConfig } from '@angular/material/core';
             provide: LocationStrategy,
             useClass: HashLocationStrategy
         },
-        {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
     ],
     bootstrap: [AppComponent]
 })
