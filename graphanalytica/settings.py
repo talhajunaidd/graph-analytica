@@ -36,7 +36,7 @@ MIDDLEWARE = [
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'graphanalytica.auto_cookie_middleware.AutoCookieMiddleware'
+    'graphanalytica.autocookiemiddleware.AutoCookieMiddleware'
 ]
 
 # AUTHENTICATION_BACKENDS = ['graphanalytica.api.authentication_backend.AuthenticationBackendAnonymous']

@@ -7,7 +7,7 @@ class AutoCookieMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        unique_id = request.COOKIES.get('uuid')
-        if unique_id is None:
-            response.set_cookie('uuid', uuid.uuid4())
+        user_id = request.COOKIES.get('user_id')
+        if user_id is None:
+            response.set_cookie('user_id', uuid.uuid4())
         return response
