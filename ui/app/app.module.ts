@@ -34,7 +34,7 @@ import {AppMaterialModule} from './app-material.module';
         FlexLayoutModule,
         HttpClientModule,
         SharedModule,
-        RouterModule.forRoot(AppRoutes)
+        RouterModule.forRoot(AppRoutes, { relativeLinkResolution: 'legacy' })
     ],
     providers: [
         {
