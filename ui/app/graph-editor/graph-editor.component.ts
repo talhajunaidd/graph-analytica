@@ -1,7 +1,7 @@
 import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSliderChange } from '@angular/material/slider';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSliderChange} from '@angular/material/slider';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {GraphService} from '../../_services/graph.service';
 import {NodeInputDialogComponent} from './node-input-dialog/node-input-dialog.component';
 import {HttpClient, HttpEventType, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
@@ -20,7 +20,7 @@ import {MagnifierModel} from '../state-graph/magnifier.model';
     styleUrls: ['./graph-editor.component.scss']
 })
 export class GraphEditorComponent implements OnInit, AfterViewChecked {
-    @ViewChild(NgxCytoscapeComponent, { static: true })
+    @ViewChild(NgxCytoscapeComponent, {static: true})
     cy: NgxCytoscapeComponent;
 
     progress: number;

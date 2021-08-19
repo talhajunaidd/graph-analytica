@@ -89,10 +89,17 @@ export class StateGraphComponent implements OnInit, AfterViewChecked {
     }
 
     selectCycle(cycle: string[]): void {
+        const color = '#1976D2';
         const cyclicNodes = this.cy.cy.nodes().filter(ele => {
             return cycle.indexOf(ele.data('id')) !== -1;
         });
-        cyclicNodes.style('background-color', '#1976D2');
+        cyclicNodes.style('background-color', color);
+        const cyclicEdges = this.cy.cy.edges().filter(ele =>{
+            const source = ele.data('source');
+            const target = ele.data('target');
+            return cycle.indexOf(source) !== -1 && cycle.indexOf(target) !== -1;
+        });
+        cyclicEdges.style({'line-color': color, 'target-arrow-color': color});
     }
 
     resetCycles(): void {
